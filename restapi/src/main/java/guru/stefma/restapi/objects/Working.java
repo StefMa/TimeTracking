@@ -1,95 +1,43 @@
 package guru.stefma.restapi.objects;
 
 
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
 
 public class Working {
 
     @SerializedName("token")
-    @Expose
-    private String token;
+    private String mToken;
+
     @SerializedName("working_day")
-    @Expose
-    private WorkingDay workingDay;
-    @SerializedName("double_working")
-    @Expose
-    private Boolean doubleWorking;
-    @SerializedName("first_work")
-    @Expose
-    private Work firstWork;
-    @SerializedName("second_work")
-    @Expose
-    private Work secondWork;
+    private WorkingDay mWorkingDay;
 
-    /**
-     * @return The token
-     */
+    @SerializedName("work")
+    private List<Work> mWorkList;
+
     public String getToken() {
-        return token;
+        return mToken;
     }
 
-    /**
-     * @param token The token
-     */
     public void setToken(String token) {
-        this.token = token;
+        this.mToken = token;
     }
 
-    /**
-     * @return The workingDay
-     */
     public WorkingDay getWorkingDay() {
-        return workingDay;
+        return mWorkingDay;
     }
 
-    /**
-     * @param workingDay The working_day
-     */
     public void setWorkingDay(WorkingDay workingDay) {
-        this.workingDay = workingDay;
+        this.mWorkingDay = workingDay;
     }
 
-    /**
-     * @return The doubleWorking
-     */
-    public Boolean getDoubleWorking() {
-        return doubleWorking;
+    public List<Work> getWorkList() {
+        return mWorkList;
     }
 
-    /**
-     * @param doubleWorking The double_working
-     */
-    public void setDoubleWorking(Boolean doubleWorking) {
-        this.doubleWorking = doubleWorking;
-    }
-
-    /**
-     * @return The firstWork
-     */
-    public Work getFirstWork() {
-        return firstWork;
-    }
-
-    /**
-     * @param firstWork The first_work
-     */
-    public void setFirstWork(Work firstWork) {
-        this.firstWork = firstWork;
-    }
-
-    /**
-     * @return The secondWork
-     */
-    public Work getSecondWork() {
-        return secondWork;
-    }
-
-    /**
-     * @param secondWork The second_work
-     */
-    public void setSecondWork(Work secondWork) {
-        this.secondWork = secondWork;
+    public void setWorkList(List<Work> workList) {
+        this.mWorkList = workList;
     }
 
 }

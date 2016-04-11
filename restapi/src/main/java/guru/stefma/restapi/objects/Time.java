@@ -1,43 +1,29 @@
 package guru.stefma.restapi.objects;
 
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Time {
 
     @SerializedName("hour")
-    @Expose
-    private Integer hour;
+    private Integer mHour;
+
     @SerializedName("minute")
-    @Expose
-    private Integer minute;
+    private Integer mMinute;
 
-    /**
-     * @return The hour
-     */
     public Integer getHour() {
-        return hour;
+        return mHour;
     }
 
-    /**
-     * @param hour The hour
-     */
     public void setHour(Integer hour) {
-        this.hour = hour;
+        this.mHour = hour;
     }
 
-    /**
-     * @return The minute
-     */
     public Integer getMinute() {
-        return minute;
+        return mMinute;
     }
 
-    /**
-     * @param minute The minute
-     */
     public void setMinute(Integer minute) {
-        this.minute = minute;
+        this.mMinute = minute;
     }
 
 }

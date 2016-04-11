@@ -1,60 +1,40 @@
 package guru.stefma.restapi.objects;
 
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class WorkingMonth {
 
     @SerializedName("token")
-    @Expose
-    private String token;
+    private String mToken;
+
     @SerializedName("year")
-    @Expose
-    private Integer year;
+    private Integer mYear;
+
     @SerializedName("month")
-    @Expose
-    private Integer month;
+    private Integer mMonth;
 
-    /**
-     * @return The token
-     */
     public String getToken() {
-        return token;
+        return mToken;
     }
 
-    /**
-     * @param token The token
-     */
     public void setToken(String token) {
-        this.token = token;
+        this.mToken = token;
     }
 
-    /**
-     * @return The year
-     */
     public Integer getYear() {
-        return year;
+        return mYear;
     }
 
-    /**
-     * @param year The year
-     */
     public void setYear(Integer year) {
-        this.year = year;
+        this.mYear = year;
     }
 
-    /**
-     * @return The month
-     */
     public Integer getMonth() {
-        return month;
+        return mMonth;
     }
 
-    /**
-     * @param month The month
-     */
     public void setMonth(Integer month) {
-        this.month = month;
+        this.mMonth = month;
     }
 
 }

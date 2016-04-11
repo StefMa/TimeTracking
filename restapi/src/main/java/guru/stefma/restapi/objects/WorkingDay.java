@@ -1,26 +1,18 @@
 package guru.stefma.restapi.objects;
 
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class WorkingDay extends WorkingMonth {
 
     @SerializedName("day")
-    @Expose
-    private Integer day;
+    private Integer mDay;
 
-    /**
-     * @return The day
-     */
     public Integer getDay() {
-        return day;
+        return mDay;
     }
 
-    /**
-     * @param day The day
-     */
     public void setDay(Integer day) {
-        this.day = day;
+        this.mDay = day;
     }
 }
 

@@ -9,6 +9,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import java.util.ArrayList;
+
 import guru.stefma.restapi.ApiHelper;
 import guru.stefma.restapi.objects.Time;
 import guru.stefma.restapi.objects.Work;
@@ -34,13 +36,13 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 WorkingDay workingDay = new WorkingDay();
-                workingDay.setDay(27);
+                workingDay.setDay(29);
                 workingDay.setYear(2016);
-                workingDay.setMonth(2);
+                workingDay.setMonth(3);
 
                 Time startTimeFirstWork = new Time();
-                startTimeFirstWork.setHour(7);
-                startTimeFirstWork.setMinute(30);
+                startTimeFirstWork.setHour(12);
+                startTimeFirstWork.setMinute(10);
                 Time endTimeFirstWork = new Time();
                 endTimeFirstWork.setHour(10);
                 endTimeFirstWork.setMinute(30);
@@ -60,12 +62,14 @@ public class MainActivity extends AppCompatActivity {
                 secondWork.setStartTime(startTimeSecondWork);
                 secondWork.setEndTime(endTimeSecondWork);
 
+                ArrayList<Work> works = new ArrayList<>();
+                works.add(firstWork);
+                works.add(secondWork);
+
                 Working working = new Working();
                 working.setToken(getString(R.string.USER_TOKEN));
-                working.setDoubleWorking(true);
                 working.setWorkingDay(workingDay);
-                working.setFirstWork(firstWork);
-                working.setSecondWork(secondWork);
+                working.setWorkList(works);
 
                 new ApiHelper().saveWorking(working, new Callback<Void>() {
                     @Override
