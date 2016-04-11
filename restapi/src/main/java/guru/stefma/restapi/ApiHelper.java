@@ -4,10 +4,10 @@ import guru.stefma.restapi.objects.Working;
 import guru.stefma.restapi.objects.WorkingMonth;
 import guru.stefma.restapi.services.GetWorkingMonthService;
 import guru.stefma.restapi.services.SaveWorkingService;
-import retrofit.Call;
-import retrofit.Callback;
-import retrofit.GsonConverterFactory;
-import retrofit.Retrofit;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiHelper {
 

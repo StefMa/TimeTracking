@@ -15,9 +15,9 @@ import guru.stefma.restapi.objects.Work;
 import guru.stefma.restapi.objects.Working;
 import guru.stefma.restapi.objects.WorkingDay;
 import guru.stefma.restapi.objects.WorkingMonth;
-import retrofit.Callback;
-import retrofit.Response;
-import retrofit.Retrofit;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -69,13 +69,13 @@ public class MainActivity extends AppCompatActivity {
 
                 new ApiHelper().saveWorking(working, new Callback<Void>() {
                     @Override
-                    public void onResponse(Response<Void> response, Retrofit retrofit) {
+                    public void onResponse(Call<Void> call, Response<Void> response) {
                         Log.e("response_code", String.valueOf(response.code()));
                     }
 
                     @Override
-                    public void onFailure(Throwable t) {
-                        t.fillInStackTrace();
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        t.printStackTrace();
                     }
                 });
             }
@@ -92,13 +92,13 @@ public class MainActivity extends AppCompatActivity {
 
                 new ApiHelper().getWorkingMonth(workingMonth, new Callback<Void>() {
                     @Override
-                    public void onResponse(Response<Void> response, Retrofit retrofit) {
+                    public void onResponse(Call<Void> call, Response<Void> response) {
                         Log.e("response_code", String.valueOf(response.code()));
                     }
 
                     @Override
-                    public void onFailure(Throwable t) {
-                        t.fillInStackTrace();
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        t.printStackTrace();
                     }
                 });
             }
