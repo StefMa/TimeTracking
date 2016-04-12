@@ -19,6 +19,16 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    productFlavors {
+        dev {
+
+            def useIncreasedMinSdk = properties.get("increaseMinSdk", true)
+            if (useIncreasedMinSdk) {
+                minSdkVersion 21
+            }
+
+        }
+    }
 }
 
 dependencies {
