@@ -1,8 +1,23 @@
 package guru.stefma.restapi.objects;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
-public class Work {
+public class Work implements Parcelable {
+
+    public static final Creator<Work> CREATOR = new Creator<Work>() {
+        @Override
+        public Work createFromParcel(Parcel in) {
+            return new Work(in);
+        }
+
+        @Override
+        public Work[] newArray(int size) {
+            return new Work[size];
+        }
+    };
 
     @SerializedName("start_time")
     private Time mStartTime;
@@ -11,7 +26,17 @@ public class Work {
     private Time mEndTime;
 
     @SerializedName("break_time")
-    private Boolean mBreakTime;
+    private boolean mBreakTime;
+
+    public Work() {
+
+    }
+
+    protected Work(Parcel in) {
+        mStartTime = in.readParcelable(Time.class.getClassLoader());
+        mEndTime = in.readParcelable(Time.class.getClassLoader());
+        mBreakTime = in.readByte() != 0;
+    }
 
     public Time getStartTime() {
         return mStartTime;
@@ -37,4 +62,15 @@ public class Work {
         this.mBreakTime = breakTime;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeParcelable(mStartTime, i);
+        parcel.writeParcelable(mEndTime, i);
+        parcel.writeByte((byte) (mBreakTime ? 1 : 0));
+    }
 }
