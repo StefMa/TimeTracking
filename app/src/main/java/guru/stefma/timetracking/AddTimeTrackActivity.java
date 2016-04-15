@@ -1,5 +1,7 @@
 package guru.stefma.timetracking;
 
+import android.animation.Animator;
+import android.animation.AnimatorInflater;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,8 +14,6 @@ import android.widget.LinearLayout;
 
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 
-import java.util.ArrayList;
-
 public class AddTimeTrackActivity extends AppCompatActivity
         implements TimePickerDialogHelper.TimeSetListener {
 
@@ -22,8 +22,6 @@ public class AddTimeTrackActivity extends AppCompatActivity
     private static final String TAG = AddTimeTrackActivity.class.getSimpleName();
 
     private LinearLayout mTimeTrackContainer;
-
-    private ArrayList<TimeTrackView> mTimTracks = new ArrayList<>();
 
     public static Intent newInstance(Context context, CalendarDay date) {
         Intent intent = new Intent();
@@ -84,13 +82,19 @@ public class AddTimeTrackActivity extends AppCompatActivity
             }
         });
         mTimeTrackContainer.addView(trackView);
-        mTimTracks.add(trackView);
     }
 
-    private void removeTimeTrack(View view, TimeTrackView trackView) {
+    private void removeTimeTrack(View view, final TimeTrackView trackView) {
         if (mTimeTrackContainer.getChildCount() > 1) {
-            mTimeTrackContainer.removeView(trackView);
-            mTimTracks.remove(trackView);
+            Animator animator = AnimatorInflater.loadAnimator(this, R.animator.slide_to_right);
+            animator.setTarget(trackView);
+            animator.addListener(new SimpleAnimatorListener() {
+                @Override
+                public void onAnimationEnd(Animator animator) {
+                    mTimeTrackContainer.removeView(trackView);
+                }
+            });
+            animator.start();
         } else {
             Snackbar.make(view, getString(R.string.error_remove_track_view),
                     Snackbar.LENGTH_SHORT).show();
