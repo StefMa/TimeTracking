@@ -22,6 +22,7 @@
             android:layout_height="match_parent">
 
             <LinearLayout
+                android:id="@+id/addtimetrack_time_track_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/activity_horizontal_margin"
@@ -37,6 +38,7 @@
     </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton
+        android:id="@+id/addtimetrack_add_time_track"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"

@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         MaterialCalendarView calendarView = (MaterialCalendarView) findViewById(R.id.calendar_view);
+        //noinspection ConstantConditions
         calendarView.setMinimumDate(CalendarDay.from(START_CALENDAR_YEAR, START_CALENDAR_MONTH, START_CALENDAR_DAY));
         calendarView.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
