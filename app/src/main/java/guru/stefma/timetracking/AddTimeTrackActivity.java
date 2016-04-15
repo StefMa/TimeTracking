@@ -1,6 +1,5 @@
 package guru.stefma.timetracking;
 
-import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,16 +9,17 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.TimePicker;
 
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 
 import java.util.ArrayList;
 
 public class AddTimeTrackActivity extends AppCompatActivity
-        implements TimePickerDialog.OnTimeSetListener {
+        implements TimePickerDialogHelper.TimeSetListener {
 
     private static final String KEY_DAY = "KEY_DAY";
+
+    private static final String TAG = AddTimeTrackActivity.class.getSimpleName();
 
     private LinearLayout mTimeTrackContainer;
 
@@ -44,8 +44,6 @@ public class AddTimeTrackActivity extends AppCompatActivity
         setupFab();
 
         addNewTimeTrack();
-
-        showTimePickerDialog();
     }
 
     private void setupFab() {
@@ -73,6 +71,18 @@ public class AddTimeTrackActivity extends AppCompatActivity
                 removeTimeTrack(view, trackView);
             }
         });
+        trackView.setOnStartTimeClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showTimePickerDialog(trackView, TimeTrackView.START_TIME);
+            }
+        });
+        trackView.setOnEndTimeClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showTimePickerDialog(trackView, TimeTrackView.END_TIME);
+            }
+        });
         mTimeTrackContainer.addView(trackView);
         mTimTracks.add(trackView);
     }
@@ -87,12 +97,22 @@ public class AddTimeTrackActivity extends AppCompatActivity
         }
     }
 
-    private void showTimePickerDialog() {
-        TimePickerDialog timePickerDialog = new TimePickerDialog(this, this, 0, 0, true);
-        timePickerDialog.show();
+    private void showTimePickerDialog(TimeTrackView timeTrackView,
+                                      @TimeTrackView.Time String time) {
+        new TimePickerDialogHelper(this, timeTrackView, time, this);
     }
 
+
     @Override
-    public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
+    public void onTimeSet(TimeTrackView timeTextView, @TimeTrackView.Time String time,
+                          int hourOfDay, int minute) {
+        switch (time) {
+            case TimeTrackView.START_TIME:
+                timeTextView.setStartTime(hourOfDay, minute);
+                break;
+            case TimeTrackView.END_TIME:
+                timeTextView.setEndTime(hourOfDay, minute);
+                break;
+        }
     }
 }

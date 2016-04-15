@@ -35,12 +35,14 @@
         </RelativeLayout>
 
         <TextView
+            android:id="@+id/time_track_start_time"
             style="@style/Widget.AppCompat.Spinner.Underlined"
             android:layout_width="match_parent"
             android:layout_height="@dimen/touch_target"
             android:hint="@string/start_time"/>
 
         <TextView
+            android:id="@+id/time_track_end_time"
             style="@style/Widget.AppCompat.Spinner.Underlined"
             android:layout_width="match_parent"
             android:layout_height="@dimen/touch_target"
