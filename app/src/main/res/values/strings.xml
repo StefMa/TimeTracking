@@ -5,4 +5,5 @@
     <string name="end_time">End time</string>
     <string name="break_time">Break</string>
     <string name="name">Name</string>
+    <string name="error_remove_track_view">You can\'t remove this</string>
 </resources>
