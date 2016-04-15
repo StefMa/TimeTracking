@@ -3,8 +3,10 @@ package guru.stefma.timetracking;
 import android.content.Context;
 import android.support.annotation.StringDef;
 import android.support.v7.widget.CardView;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import java.lang.annotation.Retention;
@@ -30,6 +32,8 @@ public class TimeTrackView extends CardView {
 
     private TextView mTimeTrackEndTime;
 
+    private CheckBox mTimeTrackBreak;
+
     public TimeTrackView(Context context) {
         this(context, null);
     }
@@ -45,6 +49,7 @@ public class TimeTrackView extends CardView {
         mTimeTrackRemove = findViewById(R.id.time_track_remove);
         mTimeTrackStartTime = (TextView) findViewById(R.id.time_track_start_time);
         mTimeTrackEndTime = (TextView) findViewById(R.id.time_track_end_time);
+        mTimeTrackBreak = (CheckBox) findViewById(R.id.time_track_break);
     }
 
     public void setOnRemoveClickListener(View.OnClickListener clickListener) {
@@ -81,5 +86,15 @@ public class TimeTrackView extends CardView {
             timeString = "0" + timeString;
         }
         return timeString;
+    }
+
+    public boolean isFullFilled() {
+        if (TextUtils.isEmpty(mTimeTrackStartTime.getText())) {
+            return false;
+        }
+        if (TextUtils.isEmpty(mTimeTrackEndTime.getText())) {
+            return false;
+        }
+        return true;
     }
 }

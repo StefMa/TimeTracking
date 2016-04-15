@@ -62,6 +62,7 @@
                 android:text="@string/break_time"/>
 
             <CheckBox
+                android:id="@+id/time_track_break"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         </LinearLayout>

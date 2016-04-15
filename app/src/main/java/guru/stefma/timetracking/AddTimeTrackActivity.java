@@ -4,10 +4,15 @@ import android.animation.Animator;
 import android.animation.AnimatorInflater;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -22,6 +27,8 @@ public class AddTimeTrackActivity extends AppCompatActivity
     private static final String TAG = AddTimeTrackActivity.class.getSimpleName();
 
     private LinearLayout mTimeTrackContainer;
+
+    private MenuItem mSaveAction;
 
     public static Intent newInstance(Context context, CalendarDay date) {
         Intent intent = new Intent();
@@ -42,6 +49,15 @@ public class AddTimeTrackActivity extends AppCompatActivity
         setupFab();
 
         addNewTimeTrack();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.addtimetrack, menu);
+        mSaveAction = menu.findItem(R.id.addtimetrack_save_action);
+        changeSaveActionState();
+        return true;
     }
 
     private void setupFab() {
@@ -82,6 +98,7 @@ public class AddTimeTrackActivity extends AppCompatActivity
             }
         });
         mTimeTrackContainer.addView(trackView);
+        changeSaveActionState();
     }
 
     private void removeTimeTrack(View view, final TimeTrackView trackView) {
@@ -92,6 +109,7 @@ public class AddTimeTrackActivity extends AppCompatActivity
                 @Override
                 public void onAnimationEnd(Animator animator) {
                     mTimeTrackContainer.removeView(trackView);
+                    changeSaveActionState();
                 }
             });
             animator.start();
@@ -118,5 +136,35 @@ public class AddTimeTrackActivity extends AppCompatActivity
                 timeTextView.setEndTime(hourOfDay, minute);
                 break;
         }
+
+        changeSaveActionState();
+    }
+
+    private void changeSaveActionState() {
+        if (mSaveAction != null) {
+            if (checkIfAllTimeTrackViewsReady()) {
+                Drawable wrappedDrawable = DrawableCompat.wrap(mSaveAction.getIcon());
+                DrawableCompat.setTint(wrappedDrawable, getResources().getColor(android.R.color.white));
+                mSaveAction.setEnabled(true);
+                mSaveAction.setIcon(wrappedDrawable);
+            } else {
+                mSaveAction.setEnabled(false);
+                Drawable wrappedDrawable = DrawableCompat.wrap(mSaveAction.getIcon());
+                DrawableCompat.setTint(wrappedDrawable, getResources().getColor(R.color.gray));
+                mSaveAction.setIcon(wrappedDrawable);
+            }
+        }
+    }
+
+    private boolean checkIfAllTimeTrackViewsReady() {
+        int childCount = mTimeTrackContainer.getChildCount();
+        for (int i = 0; i < childCount; i++) {
+            TimeTrackView trackView = (TimeTrackView) mTimeTrackContainer.getChildAt(i);
+            boolean isFullFilled = trackView.isFullFilled();
+            if (!isFullFilled) {
+                return false;
+            }
+        }
+        return true;
     }
 }

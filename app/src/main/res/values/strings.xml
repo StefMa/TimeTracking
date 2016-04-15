@@ -8,4 +8,5 @@
     <string name="error_remove_track_view">You can\'t remove this</string>
     <string name="set_start_time">Start time: %1$s:%2$s</string>
     <string name="set_end_time">End time: %1$s:%2$s</string>
+    <string name="addtimetrack_menu_save">Save</string>
 </resources>
