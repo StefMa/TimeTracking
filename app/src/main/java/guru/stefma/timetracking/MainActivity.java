@@ -12,6 +12,8 @@ import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 
+import guru.stefma.restapi.objects.Working;
+
 public class MainActivity extends AppCompatActivity {
 
     private static final int START_CALENDAR_YEAR = 2016;
@@ -19,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
     private static final int START_CALENDAR_MONTH = 3;
 
     private static final int START_CALENDAR_DAY = 1;
+
+    public static final int TIME_TRACK_REQUEST_CODE = 99;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
                         startActivityForResult(
                                 MainActivity.this,
                                 AddTimeTrackActivity.newInstance(MainActivity.this, date),
-                                99,
+                                TIME_TRACK_REQUEST_CODE,
                                 null);
             }
         });
@@ -48,9 +52,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 99) {
+        if (requestCode == TIME_TRACK_REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
-                // Make data request
+                Working working = data.getParcelableExtra(AddTimeTrackActivity.KEY_SAVED_WORKING);
+                // Do what ever you want with working
             }
         }
     }

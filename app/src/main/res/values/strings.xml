@@ -9,4 +9,7 @@
     <string name="set_start_time">Start time: %1$s:%2$s</string>
     <string name="set_end_time">End time: %1$s:%2$s</string>
     <string name="addtimetrack_menu_save">Save</string>
+    <string name="save_error">Somethings is going wrong. Please try again later</string>
+    <string name="save_progress_title">Save work</string>
+    <string name="save_progress_message">Please wait. We will safe your work.</string>
 </resources>

@@ -6,6 +6,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import guru.stefma.restapi.objects.Time;
 import guru.stefma.restapi.objects.Work;
 import guru.stefma.restapi.objects.Working;
 import guru.stefma.restapi.objects.builder.WorkingBuilder;

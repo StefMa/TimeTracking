@@ -29,6 +29,11 @@ public class Time implements Parcelable {
 
     }
 
+    public Time(int hour, int minute) {
+        mHour = hour;
+        mMinute = minute;
+    }
+
     protected Time(Parcel in) {
         mHour = in.readInt();
         mMinute = in.readInt();

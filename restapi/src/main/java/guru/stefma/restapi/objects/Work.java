@@ -32,6 +32,12 @@ public class Work implements Parcelable {
 
     }
 
+    public Work(boolean breakTime, Time startTime, Time endTime) {
+        mBreakTime = breakTime;
+        mStartTime = startTime;
+        mEndTime = endTime;
+    }
+
     protected Work(Parcel in) {
         mStartTime = in.readParcelable(Time.class.getClassLoader());
         mEndTime = in.readParcelable(Time.class.getClassLoader());

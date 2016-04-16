@@ -34,6 +34,14 @@ public class TimeTrackView extends CardView {
 
     private CheckBox mTimeTrackBreak;
 
+    private int mHourOfDayStartTime;
+
+    private int mMinuteStartTime;
+
+    private int mHourOfDayEndTime;
+
+    private int mMinuteEndTime;
+
     public TimeTrackView(Context context) {
         this(context, null);
     }
@@ -69,12 +77,16 @@ public class TimeTrackView extends CardView {
     }
 
     public void setStartTime(int hourOfDay, int minute) {
+        mHourOfDayStartTime = hourOfDay;
+        mMinuteStartTime = minute;
         String startTime = getContext().getString(R.string.set_start_time,
                 getFormattedTime(hourOfDay), getFormattedTime(minute));
         mTimeTrackStartTime.setText(startTime);
     }
 
     public void setEndTime(int hourOfDay, int minute) {
+        mHourOfDayEndTime = hourOfDay;
+        mMinuteEndTime = minute;
         String endTime = getContext().getString(R.string.set_end_time,
                 getFormattedTime(hourOfDay), getFormattedTime(minute));
         mTimeTrackEndTime.setText(endTime);
@@ -97,4 +109,25 @@ public class TimeTrackView extends CardView {
         }
         return true;
     }
+
+    public boolean hasBreak() {
+        return mTimeTrackBreak.isChecked();
+    }
+
+    public int getStartTimeHour() {
+        return mHourOfDayStartTime;
+    }
+
+    public int getStartTimeMinute() {
+        return mMinuteStartTime;
+    }
+
+    public int getEndTimeHour() {
+        return mHourOfDayEndTime;
+    }
+
+    public int getEndTimeMinute() {
+        return mMinuteEndTime;
+    }
+
 }
