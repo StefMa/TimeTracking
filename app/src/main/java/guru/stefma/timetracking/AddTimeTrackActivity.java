@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +20,10 @@ import android.widget.LinearLayout;
 
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 
+import java.text.DateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 public class AddTimeTrackActivity extends AppCompatActivity
         implements TimePickerDialogHelper.TimeSetListener {
 
@@ -30,7 +35,7 @@ public class AddTimeTrackActivity extends AppCompatActivity
 
     private MenuItem mSaveAction;
 
-    public static Intent newInstance(Context context, CalendarDay date) {
+    public static Intent newInstance(Context context, @NonNull CalendarDay date) {
         Intent intent = new Intent();
         intent.setClass(context, AddTimeTrackActivity.class);
         intent.putExtra(KEY_DAY, date);
@@ -42,13 +47,26 @@ public class AddTimeTrackActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_addtimetrack_activity);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setupToolbar();
 
         mTimeTrackContainer = (LinearLayout) findViewById(R.id.addtimetrack_time_track_container);
         setupFab();
 
         addNewTimeTrack();
+    }
+
+    private void setupToolbar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        Bundle extras = getIntent().getExtras();
+        CalendarDay day = extras.getParcelable(KEY_DAY);
+        if (day != null) {
+            Date date = day.getDate();
+            DateFormat dateInstance = DateFormat.getDateInstance(DateFormat.SHORT, Locale.GERMAN);
+            String format = dateInstance.format(date);
+            //noinspection ConstantConditions
+            getSupportActionBar().setTitle(format);
+        }
     }
 
     @Override
