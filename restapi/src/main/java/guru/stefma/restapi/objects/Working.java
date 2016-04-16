@@ -37,6 +37,7 @@ public class Working implements Parcelable {
 
     protected Working(Parcel in) {
         mToken = in.readString();
+        mWorkingDay = in.readParcelable(WorkingDay.class.getClassLoader());
         mWorkList = in.createTypedArrayList(Work.CREATOR);
     }
 
@@ -70,8 +71,9 @@ public class Working implements Parcelable {
     }
 
     @Override
-    public void writeToParcel(Parcel parcel, int i) {
+    public void writeToParcel(Parcel parcel, int flags) {
         parcel.writeString(mToken);
+        parcel.writeParcelable(mWorkingDay, flags);
         parcel.writeTypedList(mWorkList);
     }
 }
