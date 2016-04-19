@@ -247,10 +247,7 @@ public class AddTimeTrackActivity extends AppCompatActivity
             workList.add(work);
         }
 
-        WorkingDay workingDay = new WorkingDay();
-        workingDay.setDay(mCurrentDay.getDay());
-        workingDay.setMonth(mCurrentDay.getMonth() + 1);
-        workingDay.setYear(mCurrentDay.getYear());
+        WorkingDay workingDay = CalendarViewUtils.from(mCurrentDay);
 
         Working working = new Working();
         working.setToken(getString(R.string.USER_TOKEN));

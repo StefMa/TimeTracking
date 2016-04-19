@@ -9,17 +9,28 @@ import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.DayViewDecorator;
 import com.prolificinteractive.materialcalendarview.DayViewFacade;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import guru.stefma.restapi.objects.WorkList;
+import guru.stefma.restapi.objects.WorkingDay;
+
 public class TimeTrackDecorator implements DayViewDecorator {
 
-    private final CalendarDay mDayToDecorate;
+    private final List<CalendarDay> mDaysToDecorate;
 
-    public TimeTrackDecorator(CalendarDay dayToDecorate) {
-        mDayToDecorate = dayToDecorate;
+    public TimeTrackDecorator(List<WorkList> daysToDecorate) {
+        mDaysToDecorate = new ArrayList<>(daysToDecorate.size());
+        for (WorkList work : daysToDecorate) {
+            WorkingDay workingDay = work.getWorkingDay();
+            CalendarDay calendarDar = CalendarViewUtils.from(workingDay);
+            mDaysToDecorate.add(calendarDar);
+        }
     }
 
     @Override
     public boolean shouldDecorate(CalendarDay day) {
-        return day.equals(mDayToDecorate);
+        return mDaysToDecorate.contains(day);
     }
 
     @Override

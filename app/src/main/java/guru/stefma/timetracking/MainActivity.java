@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -11,8 +12,18 @@ import android.support.v7.widget.Toolbar;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
+import com.prolificinteractive.materialcalendarview.OnMonthChangedListener;
 
+import java.util.List;
+
+import guru.stefma.restapi.ApiHelper;
+import guru.stefma.restapi.objects.WorkList;
 import guru.stefma.restapi.objects.Working;
+import guru.stefma.restapi.objects.WorkingList;
+import guru.stefma.restapi.objects.WorkingMonth;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
 
     public static final int TIME_TRACK_REQUEST_CODE = 99;
 
+    private MaterialCalendarView mCalendarView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,10 +45,14 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        MaterialCalendarView calendarView = (MaterialCalendarView) findViewById(R.id.calendar_view);
+        setupCalendarView();
+    }
+
+    private void setupCalendarView() {
+        mCalendarView = (MaterialCalendarView) findViewById(R.id.calendar_view);
         //noinspection ConstantConditions
-        calendarView.setMinimumDate(CalendarDay.from(START_CALENDAR_YEAR, START_CALENDAR_MONTH, START_CALENDAR_DAY));
-        calendarView.setOnDateChangedListener(new OnDateSelectedListener() {
+        mCalendarView.setMinimumDate(CalendarDay.from(START_CALENDAR_YEAR, START_CALENDAR_MONTH, START_CALENDAR_DAY));
+        mCalendarView.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
             public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
                 ActivityCompat.
@@ -46,7 +63,39 @@ public class MainActivity extends AppCompatActivity {
                                 null);
             }
         });
+        mCalendarView.setOnMonthChangedListener(new OnMonthChangedListener() {
+            @Override
+            public void onMonthChanged(MaterialCalendarView widget, CalendarDay date) {
+                getWorkingList(date);
+            }
+        });
+        getWorkingList(mCalendarView.getCurrentDate());
+    }
 
+    private void getWorkingList(CalendarDay currentDate) {
+        WorkingMonth workingMonth = CalendarViewUtils.from(currentDate, getString(R.string.USER_TOKEN));
+        new ApiHelper().getWorkingMonth(workingMonth, new Callback<WorkingList>() {
+            @Override
+            public void onResponse(Call<WorkingList> call, Response<WorkingList> response) {
+                if (response.isSuccessful()) {
+                    WorkingList workingList = response.body();
+                    List<WorkList> workList = workingList.getWorkList();
+                    TimeTrackDecorator decorator = new TimeTrackDecorator(workList);
+                    mCalendarView.addDecorator(decorator);
+                    mCalendarView.invalidateDecorators();
+                } else {
+                    Snackbar.make(mCalendarView, R.string.error_calendar_list, Snackbar.LENGTH_LONG)
+                            .show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<WorkingList> call, Throwable t) {
+                t.printStackTrace();
+                Snackbar.make(mCalendarView, R.string.error_calendar_list, Snackbar.LENGTH_LONG)
+                        .show();
+            }
+        });
     }
 
     @Override

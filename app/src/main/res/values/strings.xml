@@ -12,4 +12,5 @@
     <string name="save_error">Somethings is going wrong. Please try again later</string>
     <string name="save_progress_title">Save work</string>
     <string name="save_progress_message">Please wait. We will safe your work.</string>
+    <string name="error_calendar_list">Something is going wrong</string>
 </resources>

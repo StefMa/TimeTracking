@@ -1,6 +1,7 @@
 package guru.stefma.restapi;
 
 import guru.stefma.restapi.objects.Working;
+import guru.stefma.restapi.objects.WorkingList;
 import guru.stefma.restapi.objects.WorkingMonth;
 import guru.stefma.restapi.services.GetWorkingMonthService;
 import guru.stefma.restapi.services.SaveWorkingService;
@@ -26,9 +27,9 @@ public class ApiHelper {
         call.enqueue(callback);
     }
 
-    public void getWorkingMonth(WorkingMonth workingMonth, Callback<Void> callback) {
+    public void getWorkingMonth(WorkingMonth workingMonth, Callback<WorkingList> callback) {
         GetWorkingMonthService workingService = retrofit.create(GetWorkingMonthService.class);
-        Call<Void> call = workingService.get(workingMonth);
+        Call<WorkingList> call = workingService.get(workingMonth);
         call.enqueue(callback);
     }
 
