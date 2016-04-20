@@ -50,5 +50,12 @@ public class WorkingDay extends WorkingMonth implements Parcelable {
         dest.writeInt(mDay);
     }
 
+    public boolean equalsByDay(WorkingDay workingDay) {
+        if (workingDay.getDay().equals(getDay())
+                && workingDay.getMonth().equals(getMonth())) {
+            return true;
+        }
+        return false;
+    }
 }
 

@@ -31,6 +31,10 @@ public class WorkList implements Parcelable {
     @SerializedName("break_time")
     private boolean mBreakTime;
 
+    public WorkList() {
+
+    }
+
     protected WorkList(Parcel in) {
         mWorkingDay = in.readParcelable(WorkingDay.class.getClassLoader());
         mStartTime = in.readParcelable(Time.class.getClassLoader());
