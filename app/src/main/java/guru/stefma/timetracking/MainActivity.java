@@ -8,6 +8,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.widget.TextView;
 
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
@@ -82,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     WorkingList workingList = response.body();
                     addDecoratorsToCalendar(workingList);
+                    calculatorWorkingHours(workingList);
                 } else {
                     Snackbar.make(mCalendarView, R.string.error_calendar_list, Snackbar.LENGTH_LONG)
                             .show();
@@ -95,6 +97,18 @@ public class MainActivity extends AppCompatActivity {
                         .show();
             }
         });
+    }
+
+    private void calculatorWorkingHours(WorkingList workingList) {
+        List<WorkList> workList = workingList.getWorkList();
+        float workHourSum = 0;
+        for (WorkList work : workList) {
+            float workHour = work.getWorkTime();
+            workHourSum += workHour;
+        }
+        TextView workSum = (TextView) findViewById(R.id.work_time_sum);
+        //noinspection ConstantConditions
+        workSum.setText(getString(R.string.work_hour_sum, workHourSum));
     }
 
     private void addDecoratorsToCalendar(WorkingList workingList) {

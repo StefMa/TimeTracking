@@ -21,9 +21,9 @@ public class TrackDecorator implements LineBackgroundSpan {
 
     private final int mCount;
 
-    private final List<Integer> mWorkingHours;
+    private final List<Float> mWorkingHours;
 
-    public TrackDecorator(int count, List<Integer> workingHours) {
+    public TrackDecorator(int count, List<Float> workingHours) {
         mCount = count;
         mWorkingHours = workingHours;
     }
@@ -37,7 +37,7 @@ public class TrackDecorator implements LineBackgroundSpan {
         int oldColor = paint.getColor();
         for (int i = 0; i < mCount; i++) {
             float dayHour = left + right;
-            Integer workingHour = mWorkingHours.get(i);
+            Float workingHour = mWorkingHours.get(i);
             float workCount = dayHour * workingHour / HOURS_PER_DAY;
             paint.setColor(Color.parseColor(mColorList[i]));
             int rectTop = bottom + TOP_MARGIN + (RECT_HEIGHT * i);

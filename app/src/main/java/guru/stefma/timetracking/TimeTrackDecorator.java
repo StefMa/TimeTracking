@@ -24,9 +24,9 @@ public class TimeTrackDecorator implements DayViewDecorator {
             mDaysToDecorate.add(calendarDar);
         }
 
-        List<Integer> workHours = new ArrayList<>(daysToDecorate.size());
+        List<Float> workHours = new ArrayList<>(daysToDecorate.size());
         for (WorkList workList : daysToDecorate) {
-            int workHour = workList.getEndTime().getHour() - workList.getStartTime().getHour();
+            float workHour = workList.getWorkTime();
             workHours.add(workHour);
         }
 

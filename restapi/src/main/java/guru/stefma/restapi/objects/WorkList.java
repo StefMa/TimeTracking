@@ -19,6 +19,10 @@ public class WorkList implements Parcelable {
         }
     };
 
+    private static final int MINUTES_PER_HOUR = 60;
+
+    private static final float BREAK_TIME = 0.5f;
+
     @SerializedName("working_day")
     private WorkingDay mWorkingDay;
 
@@ -85,5 +89,27 @@ public class WorkList implements Parcelable {
         parcel.writeParcelable(mStartTime, i);
         parcel.writeParcelable(mEndTime, i);
         parcel.writeByte((byte) (mBreakTime ? 1 : 0));
+    }
+
+    public float getWorkTime() {
+        Time startTime = getStartTime();
+        Time endTime = getEndTime();
+        boolean breakTime = isBreakTime();
+
+        Integer startTimeHour = startTime.getHour();
+        Integer startTimeMinute = startTime.getMinute();
+        Integer endTimeHour = endTime.getHour();
+        Integer endTimeMinute = endTime.getMinute();
+
+        float hour = endTimeHour - startTimeHour;
+        float minute = endTimeMinute - startTimeMinute;
+        minute = minute / MINUTES_PER_HOUR;
+
+        float workTime = hour + minute;
+        if (breakTime) {
+            workTime -= BREAK_TIME;
+        }
+
+        return workTime;
     }
 }

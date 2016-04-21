@@ -38,9 +38,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/activity_horizontal_margin"
-                android:text="Work time: 169 hours"
                 android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                tools:text="Work time: 169 hours"/>
+                tools:text="Work time: 147.00h"/>
         </LinearLayout>
     </ScrollView>
 
