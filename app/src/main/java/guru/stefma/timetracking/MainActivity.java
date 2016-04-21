@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<WorkingList> call, Response<WorkingList> response) {
                 if (response.isSuccessful()) {
                     WorkingList workingList = response.body();
-                    addDecotratorsToCalendar(workingList);
+                    addDecoratorsToCalendar(workingList);
                 } else {
                     Snackbar.make(mCalendarView, R.string.error_calendar_list, Snackbar.LENGTH_LONG)
                             .show();
@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void addDecotratorsToCalendar(WorkingList workingList) {
+    private void addDecoratorsToCalendar(WorkingList workingList) {
         List<WorkList> workList = workingList.getWorkList();
         List<List<WorkList>> filteredWorkingList = DecoratorUtils.filterWorkListByDay(workList);
         ArrayList<TimeTrackDecorator> decorators = new ArrayList<>();
