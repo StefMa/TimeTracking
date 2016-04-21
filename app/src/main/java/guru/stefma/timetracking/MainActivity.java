@@ -14,11 +14,13 @@ import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 import com.prolificinteractive.materialcalendarview.OnMonthChangedListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import guru.stefma.restapi.ApiHelper;
 import guru.stefma.restapi.objects.WorkList;
 import guru.stefma.restapi.objects.Working;
+import guru.stefma.restapi.objects.WorkingDay;
 import guru.stefma.restapi.objects.WorkingList;
 import guru.stefma.restapi.objects.WorkingMonth;
 import retrofit2.Call;
@@ -79,10 +81,7 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<WorkingList> call, Response<WorkingList> response) {
                 if (response.isSuccessful()) {
                     WorkingList workingList = response.body();
-                    List<WorkList> workList = workingList.getWorkList();
-                    TimeTrackDecorator decorator = new TimeTrackDecorator(workList);
-                    mCalendarView.addDecorator(decorator);
-                    mCalendarView.invalidateDecorators();
+                    addDecotratorsToCalendar(workingList);
                 } else {
                     Snackbar.make(mCalendarView, R.string.error_calendar_list, Snackbar.LENGTH_LONG)
                             .show();
@@ -98,13 +97,27 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void addDecotratorsToCalendar(WorkingList workingList) {
+        List<WorkList> workList = workingList.getWorkList();
+        List<List<WorkList>> filteredWorkingList = DecoratorUtils.filterWorkListByDay(workList);
+        ArrayList<TimeTrackDecorator> decorators = new ArrayList<>();
+        for (List<WorkList> workListPerDay : filteredWorkingList) {
+            TimeTrackDecorator decorator = new TimeTrackDecorator(workListPerDay);
+            decorators.add(decorator);
+        }
+        mCalendarView.addDecorators(decorators);
+        mCalendarView.invalidateDecorators();
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == TIME_TRACK_REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
                 Working working = data.getParcelableExtra(AddTimeTrackActivity.KEY_SAVED_WORKING);
-                // Do what ever you want with working
+                WorkingDay workingDay = working.getWorkingDay();
+                CalendarDay calendarDay = CalendarViewUtils.from(workingDay);
+                getWorkingList(calendarDay);
             }
         }
     }
