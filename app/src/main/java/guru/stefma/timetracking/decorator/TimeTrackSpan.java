@@ -1,4 +1,4 @@
-package guru.stefma.timetracking;
+package guru.stefma.timetracking.decorator;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -7,7 +7,7 @@ import android.text.style.LineBackgroundSpan;
 
 import java.util.List;
 
-public class TrackDecorator implements LineBackgroundSpan {
+public class TimeTrackSpan implements LineBackgroundSpan {
 
     private static final int TOP_MARGIN = 8;
 
@@ -23,7 +23,7 @@ public class TrackDecorator implements LineBackgroundSpan {
 
     private final List<Float> mWorkingHours;
 
-    public TrackDecorator(int count, List<Float> workingHours) {
+    public TimeTrackSpan(int count, List<Float> workingHours) {
         mCount = count;
         mWorkingHours = workingHours;
     }

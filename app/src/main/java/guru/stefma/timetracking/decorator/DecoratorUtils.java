@@ -1,4 +1,4 @@
-package guru.stefma.timetracking;
+package guru.stefma.timetracking.decorator;
 
 import java.util.ArrayList;
 import java.util.List;

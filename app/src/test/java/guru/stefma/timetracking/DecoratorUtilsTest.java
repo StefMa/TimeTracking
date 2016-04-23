@@ -11,6 +11,7 @@ import java.util.List;
 
 import guru.stefma.restapi.objects.WorkList;
 import guru.stefma.restapi.objects.WorkingDay;
+import guru.stefma.timetracking.decorator.DecoratorUtils;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;

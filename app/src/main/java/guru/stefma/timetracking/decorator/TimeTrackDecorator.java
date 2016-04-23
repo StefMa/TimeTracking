@@ -1,4 +1,4 @@
-package guru.stefma.timetracking;
+package guru.stefma.timetracking.decorator;
 
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.DayViewDecorator;
@@ -9,12 +9,13 @@ import java.util.List;
 
 import guru.stefma.restapi.objects.WorkList;
 import guru.stefma.restapi.objects.WorkingDay;
+import guru.stefma.timetracking.CalendarViewUtils;
 
 public class TimeTrackDecorator implements DayViewDecorator {
 
     private final List<CalendarDay> mDaysToDecorate;
 
-    private final TrackDecorator mTrackDecorator;
+    private final TimeTrackSpan mTimeTrackSpan;
 
     public TimeTrackDecorator(List<WorkList> daysToDecorate) {
         mDaysToDecorate = new ArrayList<>(daysToDecorate.size());
@@ -30,7 +31,7 @@ public class TimeTrackDecorator implements DayViewDecorator {
             workHours.add(workHour);
         }
 
-        mTrackDecorator = new TrackDecorator(daysToDecorate.size(), workHours);
+        mTimeTrackSpan = new TimeTrackSpan(daysToDecorate.size(), workHours);
     }
 
     @Override
@@ -40,7 +41,7 @@ public class TimeTrackDecorator implements DayViewDecorator {
 
     @Override
     public void decorate(DayViewFacade view) {
-        view.addSpan(mTrackDecorator);
+        view.addSpan(mTimeTrackSpan);
     }
 
 }

@@ -24,6 +24,8 @@ import guru.stefma.restapi.objects.Working;
 import guru.stefma.restapi.objects.WorkingDay;
 import guru.stefma.restapi.objects.WorkingList;
 import guru.stefma.restapi.objects.WorkingMonth;
+import guru.stefma.timetracking.decorator.DecoratorUtils;
+import guru.stefma.timetracking.decorator.TimeTrackDecorator;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
