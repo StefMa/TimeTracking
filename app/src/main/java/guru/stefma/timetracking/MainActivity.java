@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
                                 AddTimeTrackActivity.newInstance(MainActivity.this, date),
                                 TIME_TRACK_REQUEST_CODE,
                                 null);
+                mCalendarView.clearSelection();
             }
         });
         mCalendarView.setOnMonthChangedListener(new OnMonthChangedListener() {
