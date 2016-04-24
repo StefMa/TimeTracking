@@ -1,4 +1,4 @@
-package guru.stefma.timetracking;
+package guru.stefma.timetracking.decorator;
 
 import android.support.annotation.NonNull;
 
