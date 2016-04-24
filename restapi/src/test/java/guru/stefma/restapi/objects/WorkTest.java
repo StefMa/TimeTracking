@@ -9,7 +9,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 @RunWith(JUnit4.class)
-public class WorkListTest {
+public class WorkTest {
 
     /**
      * WorkTime begins at 6:00 o'clock and end 12:00 o'clock <b>without</b> break
@@ -25,12 +25,12 @@ public class WorkListTest {
         Time endTime = new Time();
         endTime.setHour(12);
         endTime.setMinute(0);
-        WorkList workList = new WorkList();
-        workList.setStartTime(startTime);
-        workList.setEndTime(endTime);
-        workList.setBreakTime(false);
+        Work work = new Work();
+        work.setStartTime(startTime);
+        work.setEndTime(endTime);
+        work.setBreakTime(false);
 
-        float workTime = workList.getWorkTime();
+        float workTime = work.getWorkTime();
 
         assertThat(workTime, is(equalTo(6.0f)));
     }
@@ -49,12 +49,12 @@ public class WorkListTest {
         Time endTime = new Time();
         endTime.setHour(12);
         endTime.setMinute(45);
-        WorkList workList = new WorkList();
-        workList.setStartTime(startTime);
-        workList.setEndTime(endTime);
-        workList.setBreakTime(false);
+        Work work = new Work();
+        work.setStartTime(startTime);
+        work.setEndTime(endTime);
+        work.setBreakTime(false);
 
-        float workTime = workList.getWorkTime();
+        float workTime = work.getWorkTime();
 
         assertThat(workTime, is(equalTo(6.25f)));
     }
@@ -73,12 +73,12 @@ public class WorkListTest {
         Time endTime = new Time();
         endTime.setHour(12);
         endTime.setMinute(0);
-        WorkList workList = new WorkList();
-        workList.setStartTime(startTime);
-        workList.setEndTime(endTime);
-        workList.setBreakTime(false);
+        Work work = new Work();
+        work.setStartTime(startTime);
+        work.setEndTime(endTime);
+        work.setBreakTime(false);
 
-        float workTime = workList.getWorkTime();
+        float workTime = work.getWorkTime();
 
         assertThat(workTime, is(equalTo(5.75f)));
     }
@@ -97,12 +97,12 @@ public class WorkListTest {
         Time endTime = new Time();
         endTime.setHour(20);
         endTime.setMinute(30);
-        WorkList workList = new WorkList();
-        workList.setStartTime(startTime);
-        workList.setEndTime(endTime);
-        workList.setBreakTime(true);
+        Work work = new Work();
+        work.setStartTime(startTime);
+        work.setEndTime(endTime);
+        work.setBreakTime(true);
 
-        float workTime = workList.getWorkTime();
+        float workTime = work.getWorkTime();
 
         assertThat(workTime, is(equalTo(2.75f)));
     }
@@ -121,12 +121,12 @@ public class WorkListTest {
         Time endTime = new Time();
         endTime.setHour(23);
         endTime.setMinute(30);
-        WorkList workList = new WorkList();
-        workList.setStartTime(startTime);
-        workList.setEndTime(endTime);
-        workList.setBreakTime(true);
+        Work work = new Work();
+        work.setStartTime(startTime);
+        work.setEndTime(endTime);
+        work.setBreakTime(true);
 
-        float workTime = workList.getWorkTime();
+        float workTime = work.getWorkTime();
 
         assertThat(workTime, is(equalTo(6.5f)));
     }
@@ -145,12 +145,12 @@ public class WorkListTest {
         Time endTime = new Time();
         endTime.setHour(17);
         endTime.setMinute(53);
-        WorkList workList = new WorkList();
-        workList.setStartTime(startTime);
-        workList.setEndTime(endTime);
-        workList.setBreakTime(true);
+        Work work = new Work();
+        work.setStartTime(startTime);
+        work.setEndTime(endTime);
+        work.setBreakTime(true);
 
-        float workTime = workList.getWorkTime();
+        float workTime = work.getWorkTime();
 
         assertThat(workTime, is(equalTo(1.35f)));
     }

@@ -19,6 +19,10 @@ public class Work implements Parcelable {
         }
     };
 
+    private static final int MINUTES_PER_HOUR = 60;
+
+    private static final float BREAK_TIME = 0.5f;
+
     @SerializedName("start_time")
     private Time mStartTime;
 
@@ -78,5 +82,23 @@ public class Work implements Parcelable {
         parcel.writeParcelable(mStartTime, i);
         parcel.writeParcelable(mEndTime, i);
         parcel.writeByte((byte) (mBreakTime ? 1 : 0));
+    }
+
+    public float getWorkTime() {
+        int startTimeHour = mStartTime.getHour();
+        int startTimeMinute = mStartTime.getMinute();
+        int endTimeHour = mEndTime.getHour();
+        int endTimeMinute = mEndTime.getMinute();
+
+        float hour = endTimeHour - startTimeHour;
+        float minute = endTimeMinute - startTimeMinute;
+        minute = minute / MINUTES_PER_HOUR;
+
+        float workTime = hour + minute;
+        if (mBreakTime) {
+            workTime -= BREAK_TIME;
+        }
+
+        return workTime;
     }
 }

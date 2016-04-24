@@ -5,6 +5,8 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class WorkList implements Parcelable {
 
     public static final Creator<WorkList> CREATOR = new Creator<WorkList>() {
@@ -19,21 +21,11 @@ public class WorkList implements Parcelable {
         }
     };
 
-    private static final int MINUTES_PER_HOUR = 60;
-
-    private static final float BREAK_TIME = 0.5f;
-
     @SerializedName("working_day")
     private WorkingDay mWorkingDay;
 
-    @SerializedName("start_time")
-    private Time mStartTime;
-
-    @SerializedName("end_time")
-    private Time mEndTime;
-
-    @SerializedName("break_time")
-    private boolean mBreakTime;
+    @SerializedName("work_in_day")
+    private List<Work> mWorkList;
 
     public WorkList() {
 
@@ -41,9 +33,7 @@ public class WorkList implements Parcelable {
 
     protected WorkList(Parcel in) {
         mWorkingDay = in.readParcelable(WorkingDay.class.getClassLoader());
-        mStartTime = in.readParcelable(Time.class.getClassLoader());
-        mEndTime = in.readParcelable(Time.class.getClassLoader());
-        mBreakTime = in.readByte() != 0;
+        mWorkList = in.createTypedArrayList(Work.CREATOR);
     }
 
     public WorkingDay getWorkingDay() {
@@ -54,28 +44,12 @@ public class WorkList implements Parcelable {
         mWorkingDay = workingDay;
     }
 
-    public Time getStartTime() {
-        return mStartTime;
+    public List<Work> getWorkList() {
+        return mWorkList;
     }
 
-    public void setStartTime(Time startTime) {
-        mStartTime = startTime;
-    }
-
-    public Time getEndTime() {
-        return mEndTime;
-    }
-
-    public void setEndTime(Time endTime) {
-        mEndTime = endTime;
-    }
-
-    public boolean isBreakTime() {
-        return mBreakTime;
-    }
-
-    public void setBreakTime(boolean breakTime) {
-        mBreakTime = breakTime;
+    public void setWorkList(List<Work> workList) {
+        mWorkList = workList;
     }
 
     @Override
@@ -86,30 +60,7 @@ public class WorkList implements Parcelable {
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeParcelable(mWorkingDay, i);
-        parcel.writeParcelable(mStartTime, i);
-        parcel.writeParcelable(mEndTime, i);
-        parcel.writeByte((byte) (mBreakTime ? 1 : 0));
+        parcel.writeTypedList(mWorkList);
     }
 
-    public float getWorkTime() {
-        Time startTime = getStartTime();
-        Time endTime = getEndTime();
-        boolean breakTime = isBreakTime();
-
-        Integer startTimeHour = startTime.getHour();
-        Integer startTimeMinute = startTime.getMinute();
-        Integer endTimeHour = endTime.getHour();
-        Integer endTimeMinute = endTime.getMinute();
-
-        float hour = endTimeHour - startTimeHour;
-        float minute = endTimeMinute - startTimeMinute;
-        minute = minute / MINUTES_PER_HOUR;
-
-        float workTime = hour + minute;
-        if (breakTime) {
-            workTime -= BREAK_TIME;
-        }
-
-        return workTime;
-    }
 }

@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.List;
 
 import guru.stefma.restapi.ApiHelper;
+import guru.stefma.restapi.objects.Work;
 import guru.stefma.restapi.objects.WorkList;
 import guru.stefma.restapi.objects.Working;
 import guru.stefma.restapi.objects.WorkingDay;
@@ -18,7 +19,6 @@ import guru.stefma.restapi.objects.WorkingList;
 import guru.stefma.restapi.objects.WorkingMonth;
 import guru.stefma.timetracking.AddTimeTrackActivity;
 import guru.stefma.timetracking.CalendarViewUtils;
-import guru.stefma.timetracking.decorator.DecoratorUtils;
 import guru.stefma.timetracking.decorator.TimeTrackDecorator;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -95,10 +95,11 @@ class MainPresenter {
 
     private List<TimeTrackDecorator> createDecorators(WorkingList workingList) {
         List<WorkList> workList = workingList.getWorkList();
-        List<List<WorkList>> filteredWorkingList = DecoratorUtils.filterWorkListByDay(workList);
         List<TimeTrackDecorator> decorators = new ArrayList<>();
-        for (List<WorkList> workListPerDay : filteredWorkingList) {
-            TimeTrackDecorator decorator = new TimeTrackDecorator(workListPerDay);
+        for (WorkList workL : workList) {
+            WorkingDay workingDay = workL.getWorkingDay();
+            List<Work> workingDays = workL.getWorkList();
+            TimeTrackDecorator decorator = new TimeTrackDecorator(workingDay, workingDays);
             decorators.add(decorator);
         }
         return decorators;
@@ -107,10 +108,12 @@ class MainPresenter {
     private float calculatorWorkingHours(WorkingList workingList) {
         List<WorkList> workList = workingList.getWorkList();
         float workHourSum = 0;
-        for (WorkList work : workList) {
-            float workHour = work.getWorkTime();
-            workHourSum += workHour;
+        for (WorkList workL : workList) {
+            for (Work work : workL.getWorkList()) {
+                workHourSum += work.getWorkTime();
+            }
         }
+
         return workHourSum;
     }
 

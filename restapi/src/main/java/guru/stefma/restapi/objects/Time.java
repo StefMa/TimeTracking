@@ -39,19 +39,19 @@ public class Time implements Parcelable {
         mMinute = in.readInt();
     }
 
-    public Integer getHour() {
+    public int getHour() {
         return mHour;
     }
 
-    public void setHour(Integer hour) {
+    public void setHour(int hour) {
         this.mHour = hour;
     }
 
-    public Integer getMinute() {
+    public int getMinute() {
         return mMinute;
     }
 
-    public void setMinute(Integer minute) {
+    public void setMinute(int minute) {
         this.mMinute = minute;
     }
 
