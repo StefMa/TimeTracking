@@ -18,6 +18,7 @@ import guru.stefma.restapi.objects.WorkingDay;
 import guru.stefma.restapi.objects.WorkingList;
 import guru.stefma.restapi.objects.WorkingMonth;
 import guru.stefma.timetracking.AddTimeTrackActivity;
+import guru.stefma.timetracking.BuildConfig;
 import guru.stefma.timetracking.CalendarViewUtils;
 import guru.stefma.timetracking.decorator.TimeTrackDecorator;
 import retrofit2.Call;
@@ -36,11 +37,8 @@ class MainPresenter {
 
     private final MainView mView;
 
-    private final String mUserToken;
-
-    public MainPresenter(MainView view, String userToken) {
+    public MainPresenter(MainView view) {
         mView = view;
-        mUserToken = userToken;
     }
 
     public void onViewReady() {
@@ -70,7 +68,7 @@ class MainPresenter {
     }
 
     private void getWorkingList(CalendarDay currentDate) {
-        WorkingMonth workingMonth = CalendarViewUtils.from(currentDate, mUserToken);
+        WorkingMonth workingMonth = CalendarViewUtils.from(currentDate, BuildConfig.USER_TOKEN);
         new ApiHelper().getWorkingMonth(workingMonth, new Callback<WorkingList>() {
             @Override
             public void onResponse(Call<WorkingList> call, Response<WorkingList> response) {

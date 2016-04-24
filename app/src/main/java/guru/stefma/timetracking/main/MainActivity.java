@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
         mCalendarView = (MaterialCalendarView) findViewById(R.id.calendar_view);
         mWorkSum = (TextView) findViewById(R.id.work_time_sum);
 
-        mPresenter = new MainPresenter(this, getString(R.string.USER_TOKEN));
+        mPresenter = new MainPresenter(this);
         mPresenter.onViewReady();
     }
 
