@@ -37,6 +37,8 @@ class MainPresenter {
 
     private final MainView mView;
 
+    private WorkingList mWorkingList;
+
     public MainPresenter(MainView view) {
         mView = view;
     }
@@ -49,7 +51,10 @@ class MainPresenter {
     }
 
     public void onCalendarDateSelected(MaterialCalendarView widget, CalendarDay date) {
-        mView.startTimeTrackActivity(date, TIME_TRACK_REQUEST_CODE);
+        if (mWorkingList != null) {
+            WorkList workList = mWorkingList.getWorkListFromDay(CalendarViewUtils.from(date));
+            mView.startTimeTrackActivity(workList, TIME_TRACK_REQUEST_CODE);
+        }
     }
 
     public void onCalendarMonthChanged(MaterialCalendarView widget, CalendarDay date) {
@@ -73,10 +78,10 @@ class MainPresenter {
             @Override
             public void onResponse(Call<WorkingList> call, Response<WorkingList> response) {
                 if (response.isSuccessful()) {
-                    WorkingList workingList = response.body();
-                    List<TimeTrackDecorator> decorators = createDecorators(workingList);
+                    mWorkingList = response.body();
+                    List<TimeTrackDecorator> decorators = createDecorators();
                     mView.setDecorators(decorators);
-                    float workHourSum = calculatorWorkingHours(workingList);
+                    float workHourSum = calculatorWorkingHours();
                     mView.setWorkTimSum(workHourSum);
                 } else {
                     mView.showSnackbarError();
@@ -91,8 +96,8 @@ class MainPresenter {
         });
     }
 
-    private List<TimeTrackDecorator> createDecorators(WorkingList workingList) {
-        List<WorkList> workList = workingList.getWorkList();
+    private List<TimeTrackDecorator> createDecorators() {
+        List<WorkList> workList = mWorkingList.getWorkList();
         List<TimeTrackDecorator> decorators = new ArrayList<>();
         for (WorkList workL : workList) {
             WorkingDay workingDay = workL.getWorkingDay();
@@ -103,8 +108,8 @@ class MainPresenter {
         return decorators;
     }
 
-    private float calculatorWorkingHours(WorkingList workingList) {
-        List<WorkList> workList = workingList.getWorkList();
+    private float calculatorWorkingHours() {
+        List<WorkList> workList = mWorkingList.getWorkList();
         float workHourSum = 0;
         for (WorkList workL : workList) {
             for (Work work : workL.getWorkList()) {

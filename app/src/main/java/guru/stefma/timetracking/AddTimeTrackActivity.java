@@ -23,15 +23,14 @@ import com.prolificinteractive.materialcalendarview.CalendarDay;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 import guru.stefma.restapi.ApiHelper;
 import guru.stefma.restapi.objects.Time;
 import guru.stefma.restapi.objects.Work;
+import guru.stefma.restapi.objects.WorkList;
 import guru.stefma.restapi.objects.Working;
-import guru.stefma.restapi.objects.WorkingDay;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -41,7 +40,7 @@ public class AddTimeTrackActivity extends AppCompatActivity
 
     public static final String KEY_SAVED_WORKING = "SAVE_WORKING";
 
-    private static final String KEY_DAY = "KEY_DAY";
+    private static final String KEY_WORK_LIST = "KEY_DAY";
 
     private static final String TAG = AddTimeTrackActivity.class.getSimpleName();
 
@@ -49,12 +48,12 @@ public class AddTimeTrackActivity extends AppCompatActivity
 
     private MenuItem mSaveAction;
 
-    private CalendarDay mCurrentDay;
+    private WorkList mWorkList;
 
-    public static Intent newInstance(Context context, @NonNull CalendarDay date) {
+    public static Intent newInstance(Context context, @NonNull WorkList workList) {
         Intent intent = new Intent();
         intent.setClass(context, AddTimeTrackActivity.class);
-        intent.putExtra(KEY_DAY, date);
+        intent.putExtra(KEY_WORK_LIST, workList);
         return intent;
     }
 
@@ -64,22 +63,26 @@ public class AddTimeTrackActivity extends AppCompatActivity
         setContentView(R.layout.activity_addtimetrack_activity);
 
         Bundle extras = getIntent().getExtras();
-        mCurrentDay = extras.getParcelable(KEY_DAY);
+        mWorkList = extras.getParcelable(KEY_WORK_LIST);
 
         setupToolbar();
 
         mTimeTrackContainer = (LinearLayout) findViewById(R.id.addtimetrack_time_track_container);
         setupFab();
 
-        addNewTimeTrack();
+        if (mWorkList.getWorkList() == null) {
+            addNewTimeTrack();
+        } else {
+            addNewTimeTrackFromWork(mWorkList.getWorkList());
+        }
     }
 
     private void setupToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        Date date = mCurrentDay.getDate();
+        CalendarDay calendarDay = CalendarViewUtils.from(mWorkList.getWorkingDay());
         DateFormat dateInstance = DateFormat.getDateInstance(DateFormat.SHORT, Locale.GERMAN);
-        String format = dateInstance.format(date);
+        String format = dateInstance.format(calendarDay.getDate());
         //noinspection ConstantConditions
         getSupportActionBar().setTitle(format);
     }
@@ -95,7 +98,7 @@ public class AddTimeTrackActivity extends AppCompatActivity
                 });
     }
 
-    private void addNewTimeTrack() {
+    private TimeTrackView addNewTimeTrack() {
         final TimeTrackView trackView = new TimeTrackView(this);
         ViewGroup.MarginLayoutParams layoutParams =
                 new LinearLayout.LayoutParams(
@@ -123,6 +126,14 @@ public class AddTimeTrackActivity extends AppCompatActivity
         });
         mTimeTrackContainer.addView(trackView);
         changeSaveActionState();
+        return trackView;
+    }
+
+    private void addNewTimeTrackFromWork(List<Work> workList) {
+        for (Work work : workList) {
+            TimeTrackView trackView = addNewTimeTrack();
+            trackView.setWork(work);
+        }
     }
 
     private void removeTimeTrack(View view, final TimeTrackView trackView) {
@@ -247,11 +258,9 @@ public class AddTimeTrackActivity extends AppCompatActivity
             workList.add(work);
         }
 
-        WorkingDay workingDay = CalendarViewUtils.from(mCurrentDay);
-
         Working working = new Working();
         working.setToken(BuildConfig.USER_TOKEN);
-        working.setWorkingDay(workingDay);
+        working.setWorkingDay(mWorkList.getWorkingDay());
         working.setWorkList(workList);
         return working;
     }

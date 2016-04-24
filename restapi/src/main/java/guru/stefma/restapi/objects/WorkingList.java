@@ -58,4 +58,17 @@ public class WorkingList implements Parcelable {
         parcel.writeParcelable(mWorkingMonth, i);
         parcel.writeTypedList(mWorkList);
     }
+
+    public WorkList getWorkListFromDay(WorkingDay workingDay) {
+        List<WorkList> workList = getWorkList();
+        for (WorkList workL : workList) {
+            WorkingDay day = workL.getWorkingDay();
+            if (day.equalsByDay(workingDay)) {
+                return workL;
+            }
+        }
+        WorkList emptyList = new WorkList();
+        emptyList.setWorkingDay(workingDay);
+        return emptyList;
+    }
 }

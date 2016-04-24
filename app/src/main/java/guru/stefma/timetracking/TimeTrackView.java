@@ -12,6 +12,8 @@ import android.widget.TextView;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
+import guru.stefma.restapi.objects.Work;
+
 public class TimeTrackView extends CardView {
 
     @Retention(RetentionPolicy.SOURCE)
@@ -74,6 +76,12 @@ public class TimeTrackView extends CardView {
 
     private void setClickListener(View view, View.OnClickListener clickListener) {
         view.setOnClickListener(clickListener);
+    }
+
+    public void setWork(Work work) {
+        setStartTime(work.getStartTime().getHour(), work.getStartTime().getMinute());
+        setEndTime(work.getEndTime().getHour(), work.getEndTime().getMinute());
+        mTimeTrackBreak.setChecked(work.getBreakTime());
     }
 
     public void setStartTime(int hourOfDay, int minute) {

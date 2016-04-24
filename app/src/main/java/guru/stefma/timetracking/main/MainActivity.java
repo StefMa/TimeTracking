@@ -16,6 +16,7 @@ import com.prolificinteractive.materialcalendarview.OnMonthChangedListener;
 
 import java.util.List;
 
+import guru.stefma.restapi.objects.WorkList;
 import guru.stefma.timetracking.AddTimeTrackActivity;
 import guru.stefma.timetracking.R;
 import guru.stefma.timetracking.decorator.TimeTrackDecorator;
@@ -69,10 +70,10 @@ public class MainActivity extends AppCompatActivity implements MainView {
     }
 
     @Override
-    public void startTimeTrackActivity(@NonNull CalendarDay date, int requestCode) {
+    public void startTimeTrackActivity(@NonNull WorkList workList, int requestCode) {
         ActivityCompat.startActivityForResult(
                 this,
-                AddTimeTrackActivity.newInstance(MainActivity.this, date),
+                AddTimeTrackActivity.newInstance(MainActivity.this, workList),
                 requestCode,
                 null);
     }
