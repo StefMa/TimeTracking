@@ -90,6 +90,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
 
     @Override
     public void setDecorators(List<TimeTrackDecorator> decorators) {
+        mCalendarView.removeDecorators();
         mCalendarView.addDecorators(decorators);
         mCalendarView.invalidateDecorators();
     }
