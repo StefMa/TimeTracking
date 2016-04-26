@@ -40,6 +40,10 @@ public class AddTimeTrackActivity extends AppCompatActivity
 
     public static final String KEY_SAVED_WORKING = "SAVE_WORKING";
 
+    public static final int RESULT_CODE_SAVE_WORK = 2009;
+
+    public static final int RESULT_CODE_DELETE_WORK = 2010;
+
     private static final String KEY_WORK_LIST = "KEY_DAY";
 
     private static final String TAG = AddTimeTrackActivity.class.getSimpleName();
@@ -209,15 +213,17 @@ public class AddTimeTrackActivity extends AppCompatActivity
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.addtimetrack, menu);
         mSaveAction = menu.findItem(R.id.addtimetrack_save_action);
+        MenuItem deleteAction = menu.findItem(R.id.addtimetrack_delete_action);
+        deleteAction.setVisible(mWorkList.getWorkList() != null);
         changeSaveActionState();
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        final ProgressDialog progressDialog = new ProgressDialog(this);
         switch (item.getItemId()) {
             case R.id.addtimetrack_save_action:
-                final ProgressDialog progressDialog = new ProgressDialog(this);
                 progressDialog.setTitle(R.string.save_progress_title);
                 progressDialog.setMessage(getString(R.string.save_progress_message));
                 progressDialog.show();
@@ -225,18 +231,56 @@ public class AddTimeTrackActivity extends AppCompatActivity
                 new ApiHelper().saveWorking(working, new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
-                        progressDialog.dismiss();
-                        Intent resultIntent = new Intent();
-                        resultIntent.putExtra(KEY_SAVED_WORKING, working);
-                        setResult(RESULT_OK, resultIntent);
-                        finish();
+                        if (response.isSuccessful()) {
+                            progressDialog.dismiss();
+                            Intent resultIntent = new Intent();
+                            resultIntent.putExtra(KEY_SAVED_WORKING, working);
+                            setResult(RESULT_CODE_SAVE_WORK, resultIntent);
+                            finish();
+                        } else {
+                            Snackbar.make(mTimeTrackContainer, R.string.default_error,
+                                    Snackbar.LENGTH_LONG).show();
+                        }
                     }
 
                     @Override
                     public void onFailure(Call<Void> call, Throwable t) {
                         t.printStackTrace();
                         progressDialog.dismiss();
-                        Snackbar.make(mTimeTrackContainer, R.string.save_error,
+                        Snackbar.make(mTimeTrackContainer, R.string.default_error,
+                                Snackbar.LENGTH_LONG).show();
+                    }
+                });
+
+                return true;
+            case R.id.addtimetrack_delete_action:
+                progressDialog.setTitle(R.string.delete_progress_title);
+                progressDialog.setMessage(getString(R.string.delete_progress_message));
+                progressDialog.show();
+                final Working deleteWorking = new Working();
+                deleteWorking.setToken(BuildConfig.USER_TOKEN);
+                deleteWorking.setWorkingDay(mWorkList.getWorkingDay());
+                new ApiHelper().deleteWork(deleteWorking, new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        if (response.isSuccessful()) {
+                            progressDialog.dismiss();
+                            Intent resultIntent = new Intent();
+                            resultIntent.putExtra(KEY_SAVED_WORKING, deleteWorking);
+                            setResult(RESULT_CODE_DELETE_WORK, resultIntent);
+                            finish();
+                        } else {
+                            progressDialog.dismiss();
+                            Snackbar.make(mTimeTrackContainer, R.string.default_error,
+                                    Snackbar.LENGTH_LONG).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        t.printStackTrace();
+                        progressDialog.dismiss();
+                        Snackbar.make(mTimeTrackContainer, R.string.default_error,
                                 Snackbar.LENGTH_LONG).show();
                     }
                 });

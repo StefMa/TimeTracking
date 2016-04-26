@@ -1,6 +1,5 @@
 package guru.stefma.timetracking.main;
 
-import android.app.Activity;
 import android.content.Intent;
 
 import com.prolificinteractive.materialcalendarview.CalendarDay;
@@ -63,7 +62,7 @@ class MainPresenter {
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == TIME_TRACK_REQUEST_CODE) {
-            if (resultCode == Activity.RESULT_OK) {
+            if (resultCode == AddTimeTrackActivity.RESULT_CODE_SAVE_WORK) {
                 Working working = data.getParcelableExtra(AddTimeTrackActivity.KEY_SAVED_WORKING);
                 WorkingDay workingDay = working.getWorkingDay();
                 CalendarDay calendarDay = CalendarViewUtils.from(workingDay);

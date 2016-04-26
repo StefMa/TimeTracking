@@ -3,6 +3,7 @@ package guru.stefma.restapi;
 import guru.stefma.restapi.objects.Working;
 import guru.stefma.restapi.objects.WorkingList;
 import guru.stefma.restapi.objects.WorkingMonth;
+import guru.stefma.restapi.services.DeleteWorkingService;
 import guru.stefma.restapi.services.GetWorkingMonthService;
 import guru.stefma.restapi.services.SaveWorkingService;
 import retrofit2.Call;
@@ -30,6 +31,12 @@ public class ApiHelper {
     public void getWorkingMonth(WorkingMonth workingMonth, Callback<WorkingList> callback) {
         GetWorkingMonthService workingService = retrofit.create(GetWorkingMonthService.class);
         Call<WorkingList> call = workingService.get(workingMonth);
+        call.enqueue(callback);
+    }
+
+    public void deleteWork(Working working, Callback<Void> callback) {
+        DeleteWorkingService deleteWorking = retrofit.create(DeleteWorkingService.class);
+        Call<Void> call = deleteWorking.delete(working);
         call.enqueue(callback);
     }
 
