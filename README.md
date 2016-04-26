@@ -3,7 +3,7 @@ This is an Android Client for time tracking.
 
 ## How to Build
 ### Server side
-First you need to setup the [server side](github.com/StefMa/TimeTrackingServer) for this project properly.
+First you need to setup the [server side](https://github.com/StefMa/TimeTrackingServer) for this project properly.
 
 ### Configure the `build.gradle` files
 When do you have your App Engine project id and made a account for this app you can change the `gradle` files.
