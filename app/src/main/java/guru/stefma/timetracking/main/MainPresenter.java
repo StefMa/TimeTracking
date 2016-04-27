@@ -62,7 +62,8 @@ class MainPresenter {
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == TIME_TRACK_REQUEST_CODE) {
-            if (resultCode == AddTimeTrackActivity.RESULT_CODE_SAVE_WORK) {
+            if (resultCode == AddTimeTrackActivity.RESULT_CODE_SAVE_WORK ||
+                    resultCode == AddTimeTrackActivity.RESULT_CODE_DELETE_WORK) {
                 Working working = data.getParcelableExtra(AddTimeTrackActivity.KEY_SAVED_WORKING);
                 WorkingDay workingDay = working.getWorkingDay();
                 CalendarDay calendarDay = CalendarViewUtils.from(workingDay);
