@@ -6,6 +6,7 @@ import guru.stefma.restapi.objects.WorkingMonth;
 import guru.stefma.restapi.services.DeleteWorkingService;
 import guru.stefma.restapi.services.GetWorkingMonthService;
 import guru.stefma.restapi.services.SaveWorkingService;
+import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
@@ -19,6 +20,13 @@ public class ApiHelper {
         retrofit = new Retrofit.Builder()
                 .baseUrl(BuildConfig.API_URL)
                 .addConverterFactory(GsonConverterFactory.create())
+                .client(createHttpClient())
+                .build();
+    }
+
+    private OkHttpClient createHttpClient() {
+        return new OkHttpClient.Builder()
+                .addInterceptor(new HeaderInterceptor())
                 .build();
     }
 
