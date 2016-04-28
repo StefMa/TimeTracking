@@ -199,8 +199,8 @@ public class AddTimeTrackActivity extends AppCompatActivity
         int childCount = mTimeTrackContainer.getChildCount();
         for (int i = 0; i < childCount; i++) {
             TimeTrackView trackView = (TimeTrackView) mTimeTrackContainer.getChildAt(i);
-            boolean isFullFilled = trackView.isFullFilled();
-            if (!isFullFilled) {
+            boolean isValid = trackView.isValid();
+            if (!isValid) {
                 return false;
             }
         }

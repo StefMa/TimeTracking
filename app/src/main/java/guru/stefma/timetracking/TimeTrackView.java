@@ -112,14 +112,28 @@ public class TimeTrackView extends CardView {
         return timeString;
     }
 
-    public boolean isFullFilled() {
+    public boolean isValid() {
         if (TextUtils.isEmpty(mTimeTrackStartTime.getText())) {
             return false;
         }
         if (TextUtils.isEmpty(mTimeTrackEndTime.getText())) {
             return false;
         }
+        if (!(isEndHourBiggerThanStartHour())
+                && !(isEndHourEqualsStartHourAndEndMinuteBiggerThanStartMinute())) {
+            return false;
+        }
+
         return true;
+    }
+
+    private boolean isEndHourBiggerThanStartHour() {
+        return getEndTimeHour() > getStartTimeHour();
+    }
+
+    private boolean isEndHourEqualsStartHourAndEndMinuteBiggerThanStartMinute() {
+        return getEndTimeHour() == getStartTimeHour()
+                && getEndTimeMinute() > getStartTimeMinute();
     }
 
     public boolean hasBreak() {
