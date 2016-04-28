@@ -30,6 +30,8 @@ public class TimeTrackView extends CardView {
 
     private View mTimeTrackRemove;
 
+    private TextView mTimeTrackName;
+
     private TextView mTimeTrackStartTime;
 
     private TextView mTimeTrackEndTime;
@@ -57,6 +59,7 @@ public class TimeTrackView extends CardView {
         inflate(context, R.layout.view_time_track, this);
 
         mTimeTrackRemove = findViewById(R.id.time_track_remove);
+        mTimeTrackName = (TextView) findViewById(R.id.time_track_name);
         mTimeTrackStartTime = (TextView) findViewById(R.id.time_track_start_time);
         mTimeTrackEndTime = (TextView) findViewById(R.id.time_track_end_time);
         mTimeTrackBreak = (CheckBox) findViewById(R.id.time_track_break);
@@ -79,6 +82,7 @@ public class TimeTrackView extends CardView {
     }
 
     public void setWork(Work work) {
+        mTimeTrackName.setText(work.getName());
         setStartTime(work.getStartTime().getHour(), work.getStartTime().getMinute());
         setEndTime(work.getEndTime().getHour(), work.getEndTime().getMinute());
         mTimeTrackBreak.setChecked(work.getBreakTime());
@@ -120,6 +124,10 @@ public class TimeTrackView extends CardView {
 
     public boolean hasBreak() {
         return mTimeTrackBreak.isChecked();
+    }
+
+    public String getName() {
+        return mTimeTrackName.getText().toString();
     }
 
     public int getStartTimeHour() {

@@ -23,6 +23,9 @@ public class Work implements Parcelable {
 
     private static final float BREAK_TIME = 0.5f;
 
+    @SerializedName("name")
+    private String mName;
+
     @SerializedName("start_time")
     private Time mStartTime;
 
@@ -36,16 +39,26 @@ public class Work implements Parcelable {
 
     }
 
-    public Work(boolean breakTime, Time startTime, Time endTime) {
+    public Work(String name, boolean breakTime, Time startTime, Time endTime) {
+        mName = name;
         mBreakTime = breakTime;
         mStartTime = startTime;
         mEndTime = endTime;
     }
 
     protected Work(Parcel in) {
+        mName = in.readString();
         mStartTime = in.readParcelable(Time.class.getClassLoader());
         mEndTime = in.readParcelable(Time.class.getClassLoader());
         mBreakTime = in.readByte() != 0;
+    }
+
+    public String getName() {
+        return mName;
+    }
+
+    public void setName(String name) {
+        mName = name;
     }
 
     public Time getStartTime() {
@@ -79,6 +92,7 @@ public class Work implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(mName);
         parcel.writeParcelable(mStartTime, i);
         parcel.writeParcelable(mEndTime, i);
         parcel.writeByte((byte) (mBreakTime ? 1 : 0));

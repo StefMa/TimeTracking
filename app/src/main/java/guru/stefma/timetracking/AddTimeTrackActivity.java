@@ -298,7 +298,7 @@ public class AddTimeTrackActivity extends AppCompatActivity
             TimeTrackView trackView = (TimeTrackView) mTimeTrackContainer.getChildAt(i);
             Time startTime = new Time(trackView.getStartTimeHour(), trackView.getStartTimeMinute());
             Time endTime = new Time(trackView.getEndTimeHour(), trackView.getEndTimeMinute());
-            Work work = new Work(trackView.hasBreak(), startTime, endTime);
+            Work work = new Work(trackView.getName(), trackView.hasBreak(), startTime, endTime);
             workList.add(work);
         }
 
