@@ -1,14 +1,18 @@
 package guru.stefma.restapi;
 
-import guru.stefma.restapi.objects.user.CreateUser;
-import guru.stefma.restapi.objects.user.UserResult;
+import guru.stefma.restapi.objects.Token;
 import guru.stefma.restapi.objects.Working;
 import guru.stefma.restapi.objects.WorkingList;
 import guru.stefma.restapi.objects.WorkingMonth;
+import guru.stefma.restapi.objects.user.CreateUser;
+import guru.stefma.restapi.objects.user.Settings;
+import guru.stefma.restapi.objects.user.SettingsWrapper;
+import guru.stefma.restapi.objects.user.UserResult;
 import guru.stefma.restapi.services.CreateUserService;
 import guru.stefma.restapi.services.DeleteWorkingService;
 import guru.stefma.restapi.services.GetWorkingMonthService;
 import guru.stefma.restapi.services.SaveWorkingService;
+import guru.stefma.restapi.services.SettingsService;
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -36,6 +40,18 @@ public class ApiHelper {
     public void createUser(CreateUser createUser, Callback<UserResult> callback) {
         CreateUserService userService = retrofit.create(CreateUserService.class);
         Call<UserResult> call = userService.create(createUser);
+        call.enqueue(callback);
+    }
+
+    public void updateSettings(SettingsWrapper settings, Callback<Void> callback) {
+        SettingsService settingsService = retrofit.create(SettingsService.class);
+        Call<Void> call = settingsService.update(settings);
+        call.enqueue(callback);
+    }
+
+    public void getSettings(Token token, Callback<Settings> callback) {
+        SettingsService settingsService = retrofit.create(SettingsService.class);
+        Call<Settings> call = settingsService.get(token);
         call.enqueue(callback);
     }
 
