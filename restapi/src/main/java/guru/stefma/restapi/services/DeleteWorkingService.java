@@ -9,7 +9,7 @@ import retrofit2.http.POST;
 public interface DeleteWorkingService {
 
     @Headers("Content-Type: application/json")
-    @POST("/rest/delete")
+    @POST("/rest/work/delete")
     Call<Void> delete(@Body Working working);
 
 }

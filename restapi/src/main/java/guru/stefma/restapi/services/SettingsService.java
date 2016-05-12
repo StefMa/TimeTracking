@@ -11,10 +11,10 @@ import retrofit2.http.POST;
 public interface SettingsService {
 
     @Headers("Content-Type: application/json")
-    @POST("/rest/settings/update")
+    @POST("/rest/user/settings/update")
     Call<Void> update(@Body SettingsWrapper settingsWrapper);
 
     @Headers("Content-Type: application/json")
-    @POST("/rest/settings/get")
+    @POST("/rest/user/settings/get")
     Call<Settings> get(@Body Token token);
 }

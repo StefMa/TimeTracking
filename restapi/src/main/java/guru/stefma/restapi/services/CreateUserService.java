@@ -10,7 +10,7 @@ import retrofit2.http.POST;
 public interface CreateUserService {
 
     @Headers("Content-Type: application/json")
-    @POST("/rest/create")
+    @POST("/rest/user/create")
     Call<UserResult> create(@Body CreateUser createUser);
 
 }

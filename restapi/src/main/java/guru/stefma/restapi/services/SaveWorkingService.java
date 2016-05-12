@@ -9,7 +9,7 @@ import retrofit2.http.POST;
 public interface SaveWorkingService {
 
     @Headers("Content-Type: application/json")
-    @POST("/rest/save")
+    @POST("/rest/work/save")
     Call<Void> save(@Body Working working);
 
 }

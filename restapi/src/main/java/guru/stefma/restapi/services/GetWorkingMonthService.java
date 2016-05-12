@@ -10,7 +10,7 @@ import retrofit2.http.POST;
 public interface GetWorkingMonthService {
 
     @Headers("Content-Type: application/json")
-    @POST("/rest/get")
+    @POST("/rest/work/get")
     Call<WorkingList> get(@Body WorkingMonth workingMonth);
 
 }
