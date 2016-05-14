@@ -1,5 +1,8 @@
 package guru.stefma.restapi;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import guru.stefma.restapi.objects.Token;
 import guru.stefma.restapi.objects.Working;
 import guru.stefma.restapi.objects.WorkingList;
@@ -26,7 +29,7 @@ public class ApiHelper {
     public ApiHelper() {
         retrofit = new Retrofit.Builder()
                 .baseUrl(BuildConfig.API_URL)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(createGson()))
                 .client(createHttpClient())
                 .build();
     }
@@ -35,6 +38,10 @@ public class ApiHelper {
         return new OkHttpClient.Builder()
                 .addInterceptor(new HeaderInterceptor())
                 .build();
+    }
+
+    private Gson createGson() {
+        return new GsonBuilder().serializeNulls().create();
     }
 
     public void createUser(CreateUser createUser, Callback<UserResult> callback) {

@@ -35,6 +35,12 @@ public class Work implements Parcelable {
     @SerializedName("break_time")
     private boolean mBreakTime;
 
+    @SerializedName("illness")
+    private boolean mIllness;
+
+    @SerializedName("vacation")
+    private boolean mVacation;
+
     public Work() {
 
     }
@@ -46,11 +52,31 @@ public class Work implements Parcelable {
         mEndTime = endTime;
     }
 
+    public static Work withIllness(String name) {
+        Work work = new Work();
+        work.mName = name;
+        work.mStartTime = Time.empty();
+        work.mEndTime = Time.empty();
+        work.mIllness = true;
+        return work;
+    }
+
+    public static Work withVacation(String name) {
+        Work work = new Work();
+        work.mName = name;
+        work.mStartTime = Time.empty();
+        work.mEndTime = Time.empty();
+        work.mVacation = true;
+        return work;
+    }
+
     protected Work(Parcel in) {
         mName = in.readString();
         mStartTime = in.readParcelable(Time.class.getClassLoader());
         mEndTime = in.readParcelable(Time.class.getClassLoader());
         mBreakTime = in.readByte() != 0;
+        mIllness = in.readByte() != 0;
+        mVacation = in.readByte() != 0;
     }
 
     public String getName() {
@@ -85,6 +111,22 @@ public class Work implements Parcelable {
         this.mBreakTime = breakTime;
     }
 
+    public boolean getIllness() {
+        return mIllness;
+    }
+
+    public void setIllness(boolean illness) {
+        mIllness = illness;
+    }
+
+    public boolean getVacation() {
+        return mVacation;
+    }
+
+    public void setVacation(boolean vacation) {
+        mVacation = vacation;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -96,6 +138,8 @@ public class Work implements Parcelable {
         parcel.writeParcelable(mStartTime, i);
         parcel.writeParcelable(mEndTime, i);
         parcel.writeByte((byte) (mBreakTime ? 1 : 0));
+        parcel.writeByte((byte) (mIllness ? 1 : 0));
+        parcel.writeByte((byte) (mVacation ? 1 : 0));
     }
 
     public float getWorkTime() {

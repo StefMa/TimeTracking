@@ -65,4 +65,23 @@ public class Time implements Parcelable {
         parcel.writeInt(mHour);
         parcel.writeInt(mMinute);
     }
+
+    public boolean isEmpty() {
+        return mHour == 0 && mMinute == 0;
+    }
+
+    /**
+     * Creates a empty time object.
+     * Empty means that hour and minute are both set to 0.
+     *
+     * This can be check with {@link Time#isEmpty()}
+     *
+     * @return A empty Time object.
+     */
+    public static Time empty() {
+        Time time = new Time();
+        time.mHour = 0;
+        time.mMinute = 0;
+        return time;
+    }
 }
