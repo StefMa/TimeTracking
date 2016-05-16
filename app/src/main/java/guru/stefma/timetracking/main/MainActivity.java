@@ -7,6 +7,9 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.prolificinteractive.materialcalendarview.CalendarDay;
@@ -19,6 +22,7 @@ import java.util.List;
 import guru.stefma.restapi.objects.WorkList;
 import guru.stefma.timetracking.AddTimeTrackActivity;
 import guru.stefma.timetracking.R;
+import guru.stefma.timetracking.settings.SettingsActivity;
 import guru.stefma.timetracking.decorator.TimeTrackDecorator;
 
 public class MainActivity extends AppCompatActivity implements MainView {
@@ -48,6 +52,23 @@ public class MainActivity extends AppCompatActivity implements MainView {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         mPresenter.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_main_settings:
+                startActivity(SettingsActivity.newInstance(this));
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

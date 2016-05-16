@@ -2,7 +2,6 @@ package guru.stefma.timetracking;
 
 import android.app.TimePickerDialog;
 import android.content.Context;
-import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.widget.TimePicker;
 
@@ -22,7 +21,7 @@ public class TimePickerDialogHelper implements TimePickerDialog.OnTimeSetListene
     }
 
     public TimePickerDialogHelper(Context context,
-                                  @IdRes TimeTrackView timeTrackView,
+                                  TimeTrackView timeTrackView,
                                   @TimeTrackView.Time String time,
                                   @NonNull TimeSetListener timeSetListener) {
         mTimeTrackView = timeTrackView;

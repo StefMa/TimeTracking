@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory app:title="@string/preference_category_general">
+        <Preference
+            app:key="@string/preference_key_default_working_hours"
+            app:title="@string/preference_default_working_hours"/>
+    </PreferenceCategory>
+
+</PreferenceScreen>
