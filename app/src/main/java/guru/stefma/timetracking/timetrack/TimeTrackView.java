@@ -1,4 +1,4 @@
-package guru.stefma.timetracking;
+package guru.stefma.timetracking.timetrack;
 
 import android.content.Context;
 import android.support.annotation.StringDef;
@@ -13,6 +13,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 import guru.stefma.restapi.objects.Work;
+import guru.stefma.timetracking.R;
 
 public class TimeTrackView extends CardView {
 

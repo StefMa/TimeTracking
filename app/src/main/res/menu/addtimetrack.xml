@@ -2,13 +2,23 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/addtimetrack_delete_action"
-        android:icon="@drawable/ic_delete_forever_white_24dp"
-        android:title="@string/addtimetrack_menu_delete"
-        app:showAsAction="ifRoom"/>
+        android:id="@+id/addtimetrack_illness_action"
+        android:icon="@drawable/ic_hospital_illness_white_24dp"
+        android:title="@string/addtimetrack_menu_illness"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/addtimetrack_vacation_action"
+        android:icon="@drawable/ic_flight_vacation_white_24dp"
+        android:title="@string/addtimetrack_menu_vacation"
+        app:showAsAction="never"/>
     <item
         android:id="@+id/addtimetrack_save_action"
         android:icon="@drawable/ic_done_white_24dp"
         android:title="@string/addtimetrack_menu_save"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/addtimetrack_delete_action"
+        android:icon="@drawable/ic_delete_forever_white_24dp"
+        android:title="@string/addtimetrack_menu_delete"
         app:showAsAction="always"/>
 </menu>

@@ -20,7 +20,7 @@ import com.prolificinteractive.materialcalendarview.OnMonthChangedListener;
 import java.util.List;
 
 import guru.stefma.restapi.objects.WorkList;
-import guru.stefma.timetracking.AddTimeTrackActivity;
+import guru.stefma.timetracking.timetrack.AddTimeTrackActivity;
 import guru.stefma.timetracking.R;
 import guru.stefma.timetracking.settings.SettingsActivity;
 import guru.stefma.timetracking.decorator.TimeTrackDecorator;

@@ -18,7 +18,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".AddTimeTrackActivity"
+            android:name=".timetrack.AddTimeTrackActivity"
             android:parentActivityName=".main.MainActivity"/>
         <activity
             android:name=".settings.SettingsActivity"

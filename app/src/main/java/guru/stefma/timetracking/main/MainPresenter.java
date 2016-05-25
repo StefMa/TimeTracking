@@ -16,7 +16,7 @@ import guru.stefma.restapi.objects.Working;
 import guru.stefma.restapi.objects.WorkingDay;
 import guru.stefma.restapi.objects.WorkingList;
 import guru.stefma.restapi.objects.WorkingMonth;
-import guru.stefma.timetracking.AddTimeTrackActivity;
+import guru.stefma.timetracking.timetrack.AddTimeTrackActivity;
 import guru.stefma.timetracking.BuildConfig;
 import guru.stefma.timetracking.CalendarViewUtils;
 import guru.stefma.timetracking.decorator.TimeTrackDecorator;

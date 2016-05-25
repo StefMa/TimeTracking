@@ -1,4 +1,4 @@
-package guru.stefma.timetracking;
+package guru.stefma.timetracking.timetrack;
 
 import android.app.TimePickerDialog;
 import android.content.Context;
