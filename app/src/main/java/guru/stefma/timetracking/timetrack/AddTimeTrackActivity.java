@@ -25,7 +25,6 @@ import java.text.DateFormat;
 import java.util.List;
 import java.util.Locale;
 
-import guru.stefma.restapi.ApiHelper;
 import guru.stefma.restapi.objects.Work;
 import guru.stefma.restapi.objects.WorkList;
 import guru.stefma.restapi.objects.Working;
@@ -33,12 +32,9 @@ import guru.stefma.timetracking.BuildConfig;
 import guru.stefma.timetracking.CalendarViewUtils;
 import guru.stefma.timetracking.R;
 import guru.stefma.timetracking.SimpleAnimatorListener;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class AddTimeTrackActivity extends AppCompatActivity
-        implements TimePickerDialogHelper.TimeSetListener {
+        implements TimePickerDialogHelper.TimeSetListener, AddTimeTrackView {
 
     public static final String KEY_SAVED_WORKING = "SAVE_WORKING";
 
@@ -55,6 +51,16 @@ public class AddTimeTrackActivity extends AppCompatActivity
     private MenuItem mSaveAction;
 
     private WorkList mWorkList;
+
+    private AddTimeTrackPresenter mPresenter;
+
+    private ProgressDialog mSaveActionDialog;
+
+    private ProgressDialog mDeleteActionDialog;
+
+    private ProgressDialog mIllnessActionDialog;
+
+    private ProgressDialog mVacationActionDialog;
 
     public static Intent newInstance(Context context, @NonNull WorkList workList) {
         Intent intent = new Intent();
@@ -81,6 +87,8 @@ public class AddTimeTrackActivity extends AppCompatActivity
         } else {
             addNewTimeTrackFromWork(mWorkList.getWorkList());
         }
+
+        mPresenter = new AddTimeTrackPresenter(this);
     }
 
     private void setupToolbar() {
@@ -223,138 +231,107 @@ public class AddTimeTrackActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        final ProgressDialog progressDialog = new ProgressDialog(this);
         switch (item.getItemId()) {
             case R.id.addtimetrack_save_action:
-                progressDialog.setTitle(R.string.save_progress_title);
-                progressDialog.setMessage(getString(R.string.save_progress_message));
-                progressDialog.show();
-                final Working working = WorkingFactory
-                        .createWorking(mTimeTrackContainer, mWorkList.getWorkingDay());
-                new ApiHelper().saveWorking(working, new Callback<Void>() {
-                    @Override
-                    public void onResponse(Call<Void> call, Response<Void> response) {
-                        if (response.isSuccessful()) {
-                            progressDialog.dismiss();
-                            Intent resultIntent = new Intent();
-                            resultIntent.putExtra(KEY_SAVED_WORKING, working);
-                            setResult(RESULT_CODE_SAVE_WORK, resultIntent);
-                            finish();
-                        } else {
-                            Snackbar.make(mTimeTrackContainer, R.string.default_error,
-                                    Snackbar.LENGTH_LONG).show();
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<Void> call, Throwable t) {
-                        t.printStackTrace();
-                        progressDialog.dismiss();
-                        Snackbar.make(mTimeTrackContainer, R.string.default_error,
-                                Snackbar.LENGTH_LONG).show();
-                    }
-                });
-
-                return true;
+                return mPresenter.onSaveActionClick();
             case R.id.addtimetrack_delete_action:
-                progressDialog.setTitle(R.string.delete_progress_title);
-                progressDialog.setMessage(getString(R.string.delete_progress_message));
-                progressDialog.show();
-                final Working deleteWorking = new Working();
-                deleteWorking.setToken(BuildConfig.USER_TOKEN);
-                deleteWorking.setWorkingDay(mWorkList.getWorkingDay());
-                new ApiHelper().deleteWork(deleteWorking, new Callback<Void>() {
-                    @Override
-                    public void onResponse(Call<Void> call, Response<Void> response) {
-                        if (response.isSuccessful()) {
-                            progressDialog.dismiss();
-                            Intent resultIntent = new Intent();
-                            resultIntent.putExtra(KEY_SAVED_WORKING, deleteWorking);
-                            setResult(RESULT_CODE_DELETE_WORK, resultIntent);
-                            finish();
-                        } else {
-                            progressDialog.dismiss();
-                            Snackbar.make(mTimeTrackContainer, R.string.default_error,
-                                    Snackbar.LENGTH_LONG).show();
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<Void> call, Throwable t) {
-                        t.printStackTrace();
-                        progressDialog.dismiss();
-                        Snackbar.make(mTimeTrackContainer, R.string.default_error,
-                                Snackbar.LENGTH_LONG).show();
-                    }
-                });
-
-                return true;
+                return mPresenter.onDeleteActionClick();
             case R.id.addtimetrack_illness_action:
-                progressDialog.setTitle(R.string.illnes_progress_title);
-                progressDialog.setMessage(getString(R.string.illness_progress_message));
-                progressDialog.show();
-                final Working illnessWorking = WorkingFactory
-                        .createIllnessWorking(mWorkList.getWorkingDay(), "Illness");
-                new ApiHelper().saveWorking(illnessWorking, new Callback<Void>() {
-                    @Override
-                    public void onResponse(Call<Void> call, Response<Void> response) {
-                        if (response.isSuccessful()) {
-                            progressDialog.dismiss();
-                            Intent resultIntent = new Intent();
-                            resultIntent.putExtra(KEY_SAVED_WORKING, illnessWorking);
-                            setResult(RESULT_CODE_DELETE_WORK, resultIntent);
-                            finish();
-                        } else {
-                            progressDialog.dismiss();
-                            Snackbar.make(mTimeTrackContainer, R.string.default_error,
-                                    Snackbar.LENGTH_LONG).show();
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<Void> call, Throwable t) {
-                        t.printStackTrace();
-                        progressDialog.dismiss();
-                        Snackbar.make(mTimeTrackContainer, R.string.default_error,
-                                Snackbar.LENGTH_LONG).show();
-                    }
-                });
-
-                return true;
+                return mPresenter.onIllnessActionClick();
             case R.id.addtimetrack_vacation_action:
-                progressDialog.setTitle(R.string.vacation_progress_title);
-                progressDialog.setMessage(getString(R.string.vacation_progress_message));
-                progressDialog.show();
-                final Working vacationWorking = WorkingFactory
-                        .createVacationWorking(mWorkList.getWorkingDay(), "Vacation");
-                new ApiHelper().saveWorking(vacationWorking, new Callback<Void>() {
-                    @Override
-                    public void onResponse(Call<Void> call, Response<Void> response) {
-                        if (response.isSuccessful()) {
-                            progressDialog.dismiss();
-                            Intent resultIntent = new Intent();
-                            resultIntent.putExtra(KEY_SAVED_WORKING, vacationWorking);
-                            setResult(RESULT_CODE_DELETE_WORK, resultIntent);
-                            finish();
-                        } else {
-                            progressDialog.dismiss();
-                            Snackbar.make(mTimeTrackContainer, R.string.default_error,
-                                    Snackbar.LENGTH_LONG).show();
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<Void> call, Throwable t) {
-                        t.printStackTrace();
-                        progressDialog.dismiss();
-                        Snackbar.make(mTimeTrackContainer, R.string.default_error,
-                                Snackbar.LENGTH_LONG).show();
-                    }
-                });
-
-                return true;
+                return mPresenter.onVacationActionClick();
         }
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void showSaveActionDialog() {
+        mSaveActionDialog = ProgressDialog.show(this,
+                getString(R.string.save_progress_title),
+                getString(R.string.save_progress_message));
+    }
+
+    @Override
+    public void dismissSaveActionDialog() {
+        if (mSaveActionDialog != null) {
+            mSaveActionDialog.dismiss();
+        }
+    }
+
+    @Override
+    public Working getWorkingToSave() {
+        return WorkingFactory.createWorking(mTimeTrackContainer, mWorkList.getWorkingDay());
+    }
+
+    @Override
+    public void showDefaultError() {
+        Snackbar.make(mTimeTrackContainer, R.string.default_error,
+                Snackbar.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void finishWithResult(int resultCode, Intent resultIntent) {
+        setResult(resultCode, resultIntent);
+        finish();
+    }
+
+    @Override
+    public void showDeleteActionDialog() {
+        mDeleteActionDialog = ProgressDialog.show(this,
+                getString(R.string.delete_progress_title),
+                getString(R.string.delete_progress_message));
+    }
+
+    @Override
+    public Working getWorkingToDelete() {
+        Working deleteWorking = new Working();
+        deleteWorking.setToken(BuildConfig.USER_TOKEN);
+        deleteWorking.setWorkingDay(mWorkList.getWorkingDay());
+        return deleteWorking;
+    }
+
+    @Override
+    public void dismissDeleteActionDialog() {
+        if (mDeleteActionDialog != null) {
+            mDeleteActionDialog.dismiss();
+        }
+    }
+
+    @Override
+    public void showIllnessActionDialog() {
+        mIllnessActionDialog = ProgressDialog.show(this,
+                getString(R.string.illnes_progress_title),
+                getString(R.string.illness_progress_message));
+    }
+
+    @Override
+    public Working getWorkingForIllness() {
+        return WorkingFactory.createIllnessWorking(mWorkList.getWorkingDay(), "Illness");
+    }
+
+    @Override
+    public void dismissIllnessActionDialog() {
+        if (mIllnessActionDialog != null) {
+            mIllnessActionDialog.dismiss();
+        }
+    }
+
+    @Override
+    public void showVacationActionDialog() {
+        mVacationActionDialog = ProgressDialog.show(this,
+                getString(R.string.vacation_progress_title),
+                getString(R.string.vacation_progress_message));
+    }
+
+    @Override
+    public Working getWorkingForVacation() {
+        return WorkingFactory.createVacationWorking(mWorkList.getWorkingDay(), "Vacation");
+    }
+
+    @Override
+    public void dismissVacationActionDialog() {
+        if (mVacationActionDialog != null) {
+            mVacationActionDialog.dismiss();
+        }
+    }
 }
