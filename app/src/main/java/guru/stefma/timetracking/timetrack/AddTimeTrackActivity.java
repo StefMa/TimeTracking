@@ -221,7 +221,7 @@ public class AddTimeTrackActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.addtimetrack, menu);
+        menuInflater.inflate(R.menu.addtimetrack_menu, menu);
         mSaveAction = menu.findItem(R.id.addtimetrack_save_action);
         MenuItem deleteAction = menu.findItem(R.id.addtimetrack_delete_action);
         deleteAction.setVisible(mWorkList.getWorkList() != null);

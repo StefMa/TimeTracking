@@ -1,5 +1,6 @@
 package guru.stefma.timetracking.main;
 
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 
 import com.prolificinteractive.materialcalendarview.CalendarDay;
@@ -21,4 +22,7 @@ interface MainView {
 
     void setDecorators(List<TimeTrackDecorator> decorators);
 
+    Drawable getVacationDrawable();
+
+    Drawable getIllnessDrawable();
 }

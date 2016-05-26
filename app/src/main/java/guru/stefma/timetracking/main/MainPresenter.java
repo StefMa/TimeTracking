@@ -1,6 +1,7 @@
 package guru.stefma.timetracking.main;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
@@ -16,10 +17,10 @@ import guru.stefma.restapi.objects.Working;
 import guru.stefma.restapi.objects.WorkingDay;
 import guru.stefma.restapi.objects.WorkingList;
 import guru.stefma.restapi.objects.WorkingMonth;
-import guru.stefma.timetracking.timetrack.AddTimeTrackActivity;
 import guru.stefma.timetracking.BuildConfig;
 import guru.stefma.timetracking.CalendarViewUtils;
 import guru.stefma.timetracking.decorator.TimeTrackDecorator;
+import guru.stefma.timetracking.timetrack.AddTimeTrackActivity;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -99,11 +100,17 @@ class MainPresenter {
     private List<TimeTrackDecorator> createDecorators() {
         List<WorkList> workList = mWorkingList.getWorkList();
         List<TimeTrackDecorator> decorators = new ArrayList<>();
+        Drawable vacationDrawable = mView.getVacationDrawable();
+        Drawable illnessDrawable = mView.getIllnessDrawable();
         for (WorkList workL : workList) {
             WorkingDay workingDay = workL.getWorkingDay();
             List<Work> workingDays = workL.getWorkList();
-            TimeTrackDecorator decorator = new TimeTrackDecorator(workingDay, workingDays);
-            decorators.add(decorator);
+            TimeTrackDecorator trackDecorator = TimeTrackDecorator.create(workingDay)
+                    .withWorkList(workingDays)
+                    .illness(illnessDrawable)
+                    .vacation(vacationDrawable)
+                    .build();
+            decorators.add(trackDecorator);
         }
         return decorators;
     }

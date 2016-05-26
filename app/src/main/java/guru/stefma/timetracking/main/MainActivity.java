@@ -1,9 +1,11 @@
 package guru.stefma.timetracking.main;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
+import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -20,10 +22,10 @@ import com.prolificinteractive.materialcalendarview.OnMonthChangedListener;
 import java.util.List;
 
 import guru.stefma.restapi.objects.WorkList;
-import guru.stefma.timetracking.timetrack.AddTimeTrackActivity;
 import guru.stefma.timetracking.R;
-import guru.stefma.timetracking.settings.SettingsActivity;
 import guru.stefma.timetracking.decorator.TimeTrackDecorator;
+import guru.stefma.timetracking.settings.SettingsActivity;
+import guru.stefma.timetracking.timetrack.AddTimeTrackActivity;
 
 public class MainActivity extends AppCompatActivity implements MainView {
 
@@ -114,5 +116,17 @@ public class MainActivity extends AppCompatActivity implements MainView {
         mCalendarView.removeDecorators();
         mCalendarView.addDecorators(decorators);
         mCalendarView.invalidateDecorators();
+    }
+
+    @Override
+    public Drawable getVacationDrawable() {
+        return VectorDrawableCompat.create(getResources(),
+                R.drawable.ic_vacation_white_24dp, getTheme());
+    }
+
+    @Override
+    public Drawable getIllnessDrawable() {
+        return VectorDrawableCompat.create(getResources(),
+                R.drawable.ic_illness_white_24dp, getTheme());
     }
 }
