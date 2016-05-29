@@ -39,7 +39,7 @@ public class TimeTrackSpan implements LineBackgroundSpan {
             float dayHour = left + right;
             Float workingHour = mWorkingHours.get(i);
             float workCount = dayHour * workingHour / HOURS_PER_DAY;
-            paint.setColor(Color.parseColor(mColorList[i]));
+            paint.setColor(Color.parseColor(mColorList[i % mColorList.length]));
             int rectTop = bottom + TOP_MARGIN + (RECT_HEIGHT * i);
             int rectBottom = bottom + BOTTOM_MARGIN + (RECT_HEIGHT * i);
 
