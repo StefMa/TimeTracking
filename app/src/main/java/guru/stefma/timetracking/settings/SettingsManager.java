@@ -23,6 +23,20 @@ public class SettingsManager {
                 0);
     }
 
+    public static void saveUserToken(Context context, String token) {
+        SettingsManager.getEditor(context)
+                .putString(
+                        context.getString(R.string.preference_key_user_token),
+                        token)
+                .apply();
+    }
+
+    public static String getUserToken(Context context) {
+        return SettingsManager.getSharedPreferences(context).getString(
+                context.getString(R.string.preference_key_user_token),
+                "");
+    }
+
     public static SharedPreferences.Editor getEditor(Context context) {
         return SettingsManager.getSharedPreferences(context).edit();
     }

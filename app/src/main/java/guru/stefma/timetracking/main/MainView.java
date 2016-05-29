@@ -27,4 +27,6 @@ interface MainView {
     Drawable getIllnessDrawable();
 
     float getDefaultWorkTime();
+
+    String getUserToken();
 }

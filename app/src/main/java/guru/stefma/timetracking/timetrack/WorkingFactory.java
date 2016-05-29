@@ -10,11 +10,16 @@ import guru.stefma.restapi.objects.Time;
 import guru.stefma.restapi.objects.Work;
 import guru.stefma.restapi.objects.Working;
 import guru.stefma.restapi.objects.WorkingDay;
-import guru.stefma.timetracking.BuildConfig;
 
 public class WorkingFactory {
 
-    public static Working createWorking(ViewGroup timeTrackViewContainer, WorkingDay workingDay) {
+    private final String mUserToken;
+
+    public WorkingFactory(String userToken) {
+        mUserToken = userToken;
+    }
+
+    public Working createWorking(ViewGroup timeTrackViewContainer, WorkingDay workingDay) {
         int childCount = timeTrackViewContainer.getChildCount();
         List<Work> workList = new ArrayList<>(childCount);
         for (int i = 0; i < childCount; i++) {
@@ -28,14 +33,14 @@ public class WorkingFactory {
         return createWorkingInternal(workingDay, workList);
     }
 
-    public static Working createIllnessWorking(WorkingDay workingDay, String name) {
+    public Working createIllnessWorking(WorkingDay workingDay, String name) {
         List<Work> workList = new ArrayList<>();
         workList.add(Work.withIllness(name));
 
         return createWorkingInternal(workingDay, workList);
     }
 
-    public static Working createVacationWorking(WorkingDay workingDay, String name) {
+    public Working createVacationWorking(WorkingDay workingDay, String name) {
         List<Work> workList = new ArrayList<>();
         workList.add(Work.withVacation(name));
 
@@ -43,9 +48,9 @@ public class WorkingFactory {
     }
 
     @NonNull
-    private static Working createWorkingInternal(WorkingDay workingDay, List<Work> workList) {
+    private Working createWorkingInternal(WorkingDay workingDay, List<Work> workList) {
         Working working = new Working();
-        working.setToken(BuildConfig.USER_TOKEN);
+        working.setToken(mUserToken);
         working.setWorkingDay(workingDay);
         working.setWorkList(workList);
         return working;

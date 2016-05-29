@@ -27,4 +27,7 @@
     <string name="illness_progress_message">Please wait. We will setup your illness work.</string>
     <string name="vacation_progress_title">Setup vacation</string>
     <string name="vacation_progress_message">Please wait. We will setup your vacation work.</string>
+    <string name="choose_username">Choose Username</string>
+    <string name="create_user">Create User</string>
+    <string name="create_user_already_exist">User already exist</string>
 </resources>

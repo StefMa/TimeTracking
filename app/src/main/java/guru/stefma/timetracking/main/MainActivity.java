@@ -2,7 +2,6 @@ package guru.stefma.timetracking.main;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -37,6 +36,10 @@ public class MainActivity extends AppCompatActivity implements MainView {
     private MaterialCalendarView mCalendarView;
 
     private TextView mWorkSum;
+
+    public static Intent newInstance(Context context) {
+        return new Intent(context, MainActivity.class);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,5 +139,10 @@ public class MainActivity extends AppCompatActivity implements MainView {
     @Override
     public float getDefaultWorkTime() {
         return SettingsManager.getDefaultWorkingHours(this);
+    }
+
+    @Override
+    public String getUserToken() {
+        return SettingsManager.getUserToken(this);
     }
 }

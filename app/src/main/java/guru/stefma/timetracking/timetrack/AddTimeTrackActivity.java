@@ -28,10 +28,10 @@ import java.util.Locale;
 import guru.stefma.restapi.objects.Work;
 import guru.stefma.restapi.objects.WorkList;
 import guru.stefma.restapi.objects.Working;
-import guru.stefma.timetracking.BuildConfig;
 import guru.stefma.timetracking.CalendarViewUtils;
 import guru.stefma.timetracking.R;
 import guru.stefma.timetracking.SimpleAnimatorListener;
+import guru.stefma.timetracking.settings.SettingsManager;
 
 public class AddTimeTrackActivity extends AppCompatActivity
         implements TimePickerDialogHelper.TimeSetListener, AddTimeTrackView {
@@ -260,7 +260,8 @@ public class AddTimeTrackActivity extends AppCompatActivity
 
     @Override
     public Working getWorkingToSave() {
-        return WorkingFactory.createWorking(mTimeTrackContainer, mWorkList.getWorkingDay());
+        WorkingFactory workingFactory = new WorkingFactory(SettingsManager.getUserToken(this));
+        return workingFactory.createWorking(mTimeTrackContainer, mWorkList.getWorkingDay());
     }
 
     @Override
@@ -285,7 +286,7 @@ public class AddTimeTrackActivity extends AppCompatActivity
     @Override
     public Working getWorkingToDelete() {
         Working deleteWorking = new Working();
-        deleteWorking.setToken(BuildConfig.USER_TOKEN);
+        deleteWorking.setToken(SettingsManager.getUserToken(this));
         deleteWorking.setWorkingDay(mWorkList.getWorkingDay());
         return deleteWorking;
     }
@@ -306,7 +307,8 @@ public class AddTimeTrackActivity extends AppCompatActivity
 
     @Override
     public Working getWorkingForIllness() {
-        return WorkingFactory.createIllnessWorking(mWorkList.getWorkingDay(), "Illness");
+        WorkingFactory workingFactory = new WorkingFactory(SettingsManager.getUserToken(this));
+        return workingFactory.createIllnessWorking(mWorkList.getWorkingDay(), "Illness");
     }
 
     @Override
@@ -325,7 +327,8 @@ public class AddTimeTrackActivity extends AppCompatActivity
 
     @Override
     public Working getWorkingForVacation() {
-        return WorkingFactory.createVacationWorking(mWorkList.getWorkingDay(), "Vacation");
+        WorkingFactory workingFactory = new WorkingFactory(SettingsManager.getUserToken(this));
+        return workingFactory.createVacationWorking(mWorkList.getWorkingDay(), "Vacation");
     }
 
     @Override

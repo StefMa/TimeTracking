@@ -1,7 +1,6 @@
 package guru.stefma.timetracking.settings;
 
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
@@ -13,7 +12,6 @@ import guru.stefma.restapi.ApiHelper;
 import guru.stefma.restapi.objects.Token;
 import guru.stefma.restapi.objects.user.Settings;
 import guru.stefma.restapi.objects.user.SettingsWrapper;
-import guru.stefma.timetracking.BuildConfig;
 import guru.stefma.timetracking.R;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -33,7 +31,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         mDefaultWorkHoursPref = findPreference(getString(R.string.preference_key_default_working_hours));
         mDefaultWorkHoursPref.setEnabled(false);
 
-        new ApiHelper().getSettings(new Token(BuildConfig.USER_TOKEN), new Callback<Settings>() {
+        new ApiHelper().getSettings(new Token(SettingsManager.getUserToken(getContext())), new Callback<Settings>() {
             @Override
             public void onResponse(Call<Settings> call, Response<Settings> response) {
                 if (response.isSuccessful()) {
@@ -90,7 +88,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                                          final AlertDialog dialog) {
         Settings settings = new Settings();
         settings.setDefaultWorktime(dialogView.getWorkingHours());
-        new ApiHelper().updateSettings(new SettingsWrapper(BuildConfig.USER_TOKEN, settings),
+        new ApiHelper().updateSettings(new SettingsWrapper(SettingsManager.getUserToken(getContext()), settings),
                 new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {

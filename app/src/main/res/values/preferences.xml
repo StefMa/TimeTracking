@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="preference_key_default_working_hours">PREF_DEFAULT_WORK_TIME</string>
+    <string name="preference_key_user_token">PREF_USER_TOKEN</string>
 </resources>

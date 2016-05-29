@@ -74,7 +74,7 @@ class MainPresenter {
     }
 
     private void getWorkingList(CalendarDay currentDate) {
-        WorkingMonth workingMonth = CalendarViewUtils.from(currentDate, BuildConfig.USER_TOKEN);
+        WorkingMonth workingMonth = CalendarViewUtils.from(currentDate, mView.getUserToken());
         new ApiHelper().getWorkingMonth(workingMonth, new Callback<WorkingList>() {
             @Override
             public void onResponse(Call<WorkingList> call, Response<WorkingList> response) {

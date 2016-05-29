@@ -28,6 +28,10 @@ public class UserResult implements Parcelable {
     @SerializedName("token")
     private String mToken;
 
+    public static final String RESULT_OK = "Ok";
+
+    public static final String RESULT_ALREADY_EXIST = "Already exist";
+
     protected UserResult(Parcel in) {
         mUsername = in.readString();
         mResult = in.readString();
