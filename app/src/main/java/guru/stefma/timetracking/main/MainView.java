@@ -25,4 +25,6 @@ interface MainView {
     Drawable getVacationDrawable();
 
     Drawable getIllnessDrawable();
+
+    float getDefaultWorkTime();
 }

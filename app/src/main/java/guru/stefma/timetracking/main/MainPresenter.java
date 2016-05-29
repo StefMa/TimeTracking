@@ -120,6 +120,9 @@ class MainPresenter {
         float workHourSum = 0;
         for (WorkList workL : workList) {
             for (Work work : workL.getWorkList()) {
+                if(work.getIllness() || work.getVacation()) {
+                    workHourSum += mView.getDefaultWorkTime();
+                }
                 workHourSum += work.getWorkTime();
             }
         }

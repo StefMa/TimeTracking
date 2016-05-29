@@ -1,6 +1,8 @@
 package guru.stefma.timetracking.main;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -25,6 +27,7 @@ import guru.stefma.restapi.objects.WorkList;
 import guru.stefma.timetracking.R;
 import guru.stefma.timetracking.decorator.TimeTrackDecorator;
 import guru.stefma.timetracking.settings.SettingsActivity;
+import guru.stefma.timetracking.settings.SettingsManager;
 import guru.stefma.timetracking.timetrack.AddTimeTrackActivity;
 
 public class MainActivity extends AppCompatActivity implements MainView {
@@ -128,5 +131,10 @@ public class MainActivity extends AppCompatActivity implements MainView {
     public Drawable getIllnessDrawable() {
         return VectorDrawableCompat.create(getResources(),
                 R.drawable.ic_illness_white_24dp, getTheme());
+    }
+
+    @Override
+    public float getDefaultWorkTime() {
+        return SettingsManager.getDefaultWorkingHours(this);
     }
 }

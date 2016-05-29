@@ -1,6 +1,7 @@
 package guru.stefma.timetracking.settings;
 
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
@@ -26,6 +27,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
     @Override
     public void onCreatePreferences(Bundle bundle, String rootKey) {
+        getPreferenceManager().setSharedPreferencesName("XX");
         addPreferencesFromResource(R.xml.settings_preferences);
 
         mDefaultWorkHoursPref = findPreference(getString(R.string.preference_key_default_working_hours));
@@ -94,8 +96,11 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         if (response.isSuccessful()) {
                             dialog.cancel();
-                            mDefaultWorkHoursPref.setSummary(String.valueOf(dialogView.getWorkingHours()));
-                            mCurrentDefaultWorkHours = dialogView.getWorkingHours();
+                            float workingHours = dialogView.getWorkingHours();
+                            mDefaultWorkHoursPref.setSummary(String.valueOf(workingHours));
+                            mCurrentDefaultWorkHours = workingHours;
+
+                            SettingsManager.saveDefaultWorkingHours(getContext(), workingHours);
                         }
                     }
 
