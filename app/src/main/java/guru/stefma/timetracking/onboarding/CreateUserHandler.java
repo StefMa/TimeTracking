@@ -2,16 +2,20 @@ package guru.stefma.timetracking.onboarding;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.EditText;
 
 import java.util.Objects;
 
 import guru.stefma.restapi.ApiHelper;
+import guru.stefma.restapi.objects.Token;
 import guru.stefma.restapi.objects.user.CreateUser;
 import guru.stefma.restapi.objects.user.UserResult;
 import guru.stefma.timetracking.R;
@@ -82,6 +86,46 @@ public class CreateUserHandler {
                 dialog.dismiss();
             }
         });
+    }
+
+    @SuppressWarnings("unused")
+    public void onAlreadyHaveAccountClick(final View view) {
+        final Context context = view.getContext();
+        View dialogView = View.inflate(context, R.layout.dialog_edittext, null);
+        final EditText dialogToken = (EditText) dialogView.findViewById(R.id.dialog_edittext);
+        new AlertDialog.Builder(context, R.style.Dialog)
+                .setTitle(context.getString(R.string.login))
+                .setView(dialogView)
+                .setPositiveButton(context.getString(R.string.login), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        new ApiHelper().loginUser(new Token(dialogToken.getText().toString()),
+                                new Callback<UserResult>() {
+                                    @Override
+                                    public void onResponse(Call<UserResult> call,
+                                                           Response<UserResult> response) {
+                                        if (response.isSuccessful()) {
+                                            UserResult result = response.body();
+                                            if (result.getResult().equals(UserResult.RESULT_OK)) {
+                                                SettingsManager.saveUserToken(context, result.getToken());
+                                                context.startActivity(MainActivity.newInstance(context));
+                                            } else {
+                                                Snackbar.make(view, context.getString(R.string.default_error),
+                                                        Snackbar.LENGTH_LONG).show();
+                                            }
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<UserResult> call, Throwable t) {
+                                        t.printStackTrace();
+                                        Snackbar.make(view, context.getString(R.string.default_error),
+                                                Snackbar.LENGTH_LONG).show();
+                                    }
+                                });
+                    }
+                })
+                .create().show();
     }
 
 }

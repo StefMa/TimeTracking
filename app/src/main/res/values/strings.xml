@@ -30,4 +30,7 @@
     <string name="username">Username</string>
     <string name="create_user">Create User</string>
     <string name="create_user_already_exist">User already exist</string>
+    <string name="have_account">Already have a Account?</string>
+    <string name="token">Token</string>
+    <string name="login">Login</string>
 </resources>

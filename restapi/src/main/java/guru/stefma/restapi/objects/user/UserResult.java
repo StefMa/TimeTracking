@@ -32,6 +32,8 @@ public class UserResult implements Parcelable {
 
     public static final String RESULT_ALREADY_EXIST = "Already exist";
 
+    public static final String RESULT_TOKEN_NOT_EXIST = "Token not exist";
+
     protected UserResult(Parcel in) {
         mUsername = in.readString();
         mResult = in.readString();
