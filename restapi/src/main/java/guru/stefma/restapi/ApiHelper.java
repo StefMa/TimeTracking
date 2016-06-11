@@ -14,6 +14,7 @@ import guru.stefma.restapi.objects.user.UserResult;
 import guru.stefma.restapi.services.CreateUserService;
 import guru.stefma.restapi.services.DeleteWorkingService;
 import guru.stefma.restapi.services.GetWorkingMonthService;
+import guru.stefma.restapi.services.LoginUserService;
 import guru.stefma.restapi.services.SaveWorkingService;
 import guru.stefma.restapi.services.SettingsService;
 import okhttp3.OkHttpClient;
@@ -47,6 +48,12 @@ public class ApiHelper {
     public void createUser(CreateUser createUser, Callback<UserResult> callback) {
         CreateUserService userService = retrofit.create(CreateUserService.class);
         Call<UserResult> call = userService.create(createUser);
+        call.enqueue(callback);
+    }
+
+    public void loginUser(Token token, Callback<UserResult> callback) {
+        LoginUserService loginUserService = retrofit.create(LoginUserService.class);
+        Call<UserResult> call = loginUserService.login(token);
         call.enqueue(callback);
     }
 
