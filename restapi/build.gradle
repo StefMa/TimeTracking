@@ -10,7 +10,6 @@ android {
         versionCode 1
         versionName "1.0"
 
-        buildConfigField "String", "API_URL", "\"http://[PROJECTID].appspot.com/\""
         buildConfigField "String", "BASIC_AUTH_CREDENTIALS", "\"[USERNAME]:[PASSWORD]\""
         buildConfigField "String", "TT_API_VERSION", "\"1\""
     }
@@ -20,6 +19,16 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    productFlavors {
+        dev {
+            buildConfigField "String", "API_URL", "\"http://dev.[PROJECTID].appspot.com/\""
+        }
+        prod {
+            buildConfigField "String", "API_URL", "\"http://[PROJECTID].appspot.com/\""
+        }
+    }
+
+    publishNonDefault true
 }
 
 dependencies {
