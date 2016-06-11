@@ -21,8 +21,6 @@ public class Work implements Parcelable {
 
     private static final int MINUTES_PER_HOUR = 60;
 
-    private static final float BREAK_TIME = 0.5f;
-
     @SerializedName("name")
     private String mName;
 
@@ -31,9 +29,6 @@ public class Work implements Parcelable {
 
     @SerializedName("end_time")
     private Time mEndTime;
-
-    @SerializedName("break_time")
-    private boolean mBreakTime;
 
     @SerializedName("illness")
     private boolean mIllness;
@@ -45,9 +40,8 @@ public class Work implements Parcelable {
 
     }
 
-    public Work(String name, boolean breakTime, Time startTime, Time endTime) {
+    public Work(String name, Time startTime, Time endTime) {
         mName = name;
-        mBreakTime = breakTime;
         mStartTime = startTime;
         mEndTime = endTime;
     }
@@ -74,7 +68,6 @@ public class Work implements Parcelable {
         mName = in.readString();
         mStartTime = in.readParcelable(Time.class.getClassLoader());
         mEndTime = in.readParcelable(Time.class.getClassLoader());
-        mBreakTime = in.readByte() != 0;
         mIllness = in.readByte() != 0;
         mVacation = in.readByte() != 0;
     }
@@ -103,14 +96,6 @@ public class Work implements Parcelable {
         this.mEndTime = endTime;
     }
 
-    public Boolean getBreakTime() {
-        return mBreakTime;
-    }
-
-    public void setBreakTime(Boolean breakTime) {
-        this.mBreakTime = breakTime;
-    }
-
     public boolean getIllness() {
         return mIllness;
     }
@@ -137,7 +122,6 @@ public class Work implements Parcelable {
         parcel.writeString(mName);
         parcel.writeParcelable(mStartTime, i);
         parcel.writeParcelable(mEndTime, i);
-        parcel.writeByte((byte) (mBreakTime ? 1 : 0));
         parcel.writeByte((byte) (mIllness ? 1 : 0));
         parcel.writeByte((byte) (mVacation ? 1 : 0));
     }
@@ -152,11 +136,6 @@ public class Work implements Parcelable {
         float minute = endTimeMinute - startTimeMinute;
         minute = minute / MINUTES_PER_HOUR;
 
-        float workTime = hour + minute;
-        if (mBreakTime) {
-            workTime -= BREAK_TIME;
-        }
-
-        return workTime;
+        return hour + minute;
     }
 }

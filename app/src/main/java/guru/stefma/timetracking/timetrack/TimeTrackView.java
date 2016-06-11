@@ -6,7 +6,6 @@ import android.support.v7.widget.CardView;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.CheckBox;
 import android.widget.TextView;
 
 import java.lang.annotation.Retention;
@@ -37,8 +36,6 @@ public class TimeTrackView extends CardView {
 
     private TextView mTimeTrackEndTime;
 
-    private CheckBox mTimeTrackBreak;
-
     private int mHourOfDayStartTime;
 
     private int mMinuteStartTime;
@@ -63,7 +60,6 @@ public class TimeTrackView extends CardView {
         mTimeTrackName = (TextView) findViewById(R.id.time_track_name);
         mTimeTrackStartTime = (TextView) findViewById(R.id.time_track_start_time);
         mTimeTrackEndTime = (TextView) findViewById(R.id.time_track_end_time);
-        mTimeTrackBreak = (CheckBox) findViewById(R.id.time_track_break);
     }
 
     public void setOnRemoveClickListener(View.OnClickListener clickListener) {
@@ -86,7 +82,6 @@ public class TimeTrackView extends CardView {
         mTimeTrackName.setText(work.getName());
         setStartTime(work.getStartTime().getHour(), work.getStartTime().getMinute());
         setEndTime(work.getEndTime().getHour(), work.getEndTime().getMinute());
-        mTimeTrackBreak.setChecked(work.getBreakTime());
     }
 
     public void setStartTime(int hourOfDay, int minute) {
@@ -135,10 +130,6 @@ public class TimeTrackView extends CardView {
     private boolean isEndHourEqualsStartHourAndEndMinuteBiggerThanStartMinute() {
         return getEndTimeHour() == getStartTimeHour()
                 && getEndTimeMinute() > getStartTimeMinute();
-    }
-
-    public boolean hasBreak() {
-        return mTimeTrackBreak.isChecked();
     }
 
     public String getName() {

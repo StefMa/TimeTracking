@@ -12,7 +12,7 @@ import static org.junit.Assert.assertThat;
 public class WorkTest {
 
     /**
-     * WorkTime begins at 6:00 o'clock and end 12:00 o'clock <b>without</b> break
+     * WorkTime begins at 6:00 o'clock and end 12:00 o'clock
      * Should return 6 hours of work
      *
      * @throws Exception
@@ -28,7 +28,6 @@ public class WorkTest {
         Work work = new Work();
         work.setStartTime(startTime);
         work.setEndTime(endTime);
-        work.setBreakTime(false);
 
         float workTime = work.getWorkTime();
 
@@ -36,7 +35,7 @@ public class WorkTest {
     }
 
     /**
-     * WorkTime begins at 6:30 o'clock and end 12:45 o'clock <b>without</b> break
+     * WorkTime begins at 6:30 o'clock and end 12:45 o'clock
      * Should return 6.25 hours of work
      *
      * @throws Exception
@@ -52,7 +51,6 @@ public class WorkTest {
         Work work = new Work();
         work.setStartTime(startTime);
         work.setEndTime(endTime);
-        work.setBreakTime(false);
 
         float workTime = work.getWorkTime();
 
@@ -60,7 +58,7 @@ public class WorkTest {
     }
 
     /**
-     * WorkTime begins at 6:15 o'clock and end 12:00 o'clock <b>without</b> break
+     * WorkTime begins at 6:15 o'clock and end 12:00 o'clock
      * Should return 5.75 hours of work
      *
      * @throws Exception
@@ -76,7 +74,6 @@ public class WorkTest {
         Work work = new Work();
         work.setStartTime(startTime);
         work.setEndTime(endTime);
-        work.setBreakTime(false);
 
         float workTime = work.getWorkTime();
 
@@ -84,13 +81,13 @@ public class WorkTest {
     }
 
     /**
-     * WorkTime begins at 17:15 o'clock and end 20:30 o'clock <b>with</b> break
-     * Should return 2.75 hours of work
+     * WorkTime begins at 17:15 o'clock and end 20:30 o'clock
+     * Should return 3.25 hours of work
      *
      * @throws Exception
      */
     @Test
-    public void testGetWorkTime_ShouldReturn2Dot75HoursOfWork() throws Exception {
+    public void testGetWorkTime_ShouldReturn3Dot25HoursOfWork() throws Exception {
         Time startTime = new Time();
         startTime.setHour(17);
         startTime.setMinute(15);
@@ -100,16 +97,15 @@ public class WorkTest {
         Work work = new Work();
         work.setStartTime(startTime);
         work.setEndTime(endTime);
-        work.setBreakTime(true);
 
         float workTime = work.getWorkTime();
 
-        assertThat(workTime, is(equalTo(2.75f)));
+        assertThat(workTime, is(equalTo(3.25f)));
     }
 
     /**
-     * WorkTime begins at 16:30 o'clock and end 23:30 o'clock <b>with</b> break
-     * Should return 6.5 hours of work
+     * WorkTime begins at 16:30 o'clock and end 23:30 o'clock
+     * Should return 7.0 hours of work
      *
      * @throws Exception
      */
@@ -124,16 +120,15 @@ public class WorkTest {
         Work work = new Work();
         work.setStartTime(startTime);
         work.setEndTime(endTime);
-        work.setBreakTime(true);
 
         float workTime = work.getWorkTime();
 
-        assertThat(workTime, is(equalTo(6.5f)));
+        assertThat(workTime, is(equalTo(7.0f)));
     }
 
     /**
-     * WorkTime begins at 16:02 o'clock and end 17:53 o'clock <b>with</b> break
-     * Should return 1.35 hours of work
+     * WorkTime begins at 16:02 o'clock and end 17:53 o'clock
+     * Should return 1.85 hours of work
      *
      * @throws Exception
      */
@@ -148,10 +143,9 @@ public class WorkTest {
         Work work = new Work();
         work.setStartTime(startTime);
         work.setEndTime(endTime);
-        work.setBreakTime(true);
 
         float workTime = work.getWorkTime();
 
-        assertThat(workTime, is(equalTo(1.35f)));
+        assertThat(workTime, is(equalTo(1.85f)));
     }
 }

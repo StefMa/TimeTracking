@@ -10,8 +10,6 @@ public class WorkBuilder {
 
     private TimeBuilder mEndTimeBuilder;
 
-    private Boolean mBreakTime;
-
     public WorkBuilder(WorkingBuilder workingBuilder) {
         this.mWorkingBuilder = workingBuilder;
     }
@@ -26,18 +24,12 @@ public class WorkBuilder {
         return mEndTimeBuilder;
     }
 
-    public WorkBuilder breakTime(Boolean breakTime) {
-        this.mBreakTime = breakTime;
-        return this;
-    }
-
     public WorkingBuilder build() {
         return mWorkingBuilder;
     }
 
     Work buildWork() {
         Work work = new Work();
-        work.setBreakTime(mBreakTime);
         work.setStartTime(mStartTimeBuilder.buildTime());
         work.setEndTime(mEndTimeBuilder.buildTime());
         return work;
