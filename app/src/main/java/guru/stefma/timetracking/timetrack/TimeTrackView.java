@@ -6,6 +6,7 @@ import android.support.v7.widget.CardView;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.lang.annotation.Retention;
@@ -56,10 +57,13 @@ public class TimeTrackView extends CardView {
 
         inflate(context, R.layout.view_time_track, this);
 
-        mTimeTrackRemove = findViewById(R.id.time_track_remove);
-        mTimeTrackName = (TextView) findViewById(R.id.time_track_name);
-        mTimeTrackStartTime = (TextView) findViewById(R.id.time_track_start_time);
-        mTimeTrackEndTime = (TextView) findViewById(R.id.time_track_end_time);
+        ViewGroup contentView = (ViewGroup) getChildAt(0);
+        ViewGroup headerView = (ViewGroup) contentView.getChildAt(0);
+
+        mTimeTrackRemove = headerView.getChildAt(1);
+        mTimeTrackName = (TextView) headerView.getChildAt(0);
+        mTimeTrackStartTime = (TextView) contentView.getChildAt(1);
+        mTimeTrackEndTime = (TextView) contentView.getChildAt(2);
     }
 
     public void setOnRemoveClickListener(View.OnClickListener clickListener) {

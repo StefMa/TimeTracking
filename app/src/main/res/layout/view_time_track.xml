@@ -10,15 +10,14 @@
         android:layout_margin="@dimen/activity_vertical_margin"
         android:orientation="vertical">
 
-        <RelativeLayout
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <EditText
-                android:id="@+id/time_track_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
+                android:layout_gravity="start"
                 android:hint="@string/name"
                 android:inputType="text"
                 android:lines="1"
@@ -26,24 +25,21 @@
                 tools:ignore="RelativeOverlap"/>
 
             <ImageView
-                android:id="@+id/time_track_remove"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
+                android:layout_gravity="end"
                 app:srcCompat="@drawable/ic_close_gray_24dp"
                 tools:ignore="ContentDescription"/>
 
-        </RelativeLayout>
+        </FrameLayout>
 
         <TextView
-            android:id="@+id/time_track_start_time"
             style="@style/Widget.AppCompat.Spinner.Underlined"
             android:layout_width="match_parent"
             android:layout_height="@dimen/touch_target"
             android:hint="@string/start_time"/>
 
         <TextView
-            android:id="@+id/time_track_end_time"
             style="@style/Widget.AppCompat.Spinner.Underlined"
             android:layout_width="match_parent"
             android:layout_height="@dimen/touch_target"
