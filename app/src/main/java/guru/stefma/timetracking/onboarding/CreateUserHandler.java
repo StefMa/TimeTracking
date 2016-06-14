@@ -70,7 +70,7 @@ public class CreateUserHandler {
                         dialog.dismiss();
                     } else if (Objects.equals(userResult.getResult(), UserResult.RESULT_OK)) {
                         SettingsManager.saveUserToken(context, userResult.getToken());
-                        context.startActivity(MainActivity.newInstance(context));
+                        context.startActivity(WelcomeActivity.newInstance(context, userResult));
                         dialog.dismiss();
                     }
                 } else {

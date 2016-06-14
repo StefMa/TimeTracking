@@ -33,4 +33,7 @@
     <string name="have_account">Already have a Account?</string>
     <string name="token">Token</string>
     <string name="login">Login</string>
+    <string name="introducing">Hello %1$s,\n\nThis is your user token. It\'s very important to save it on a safe place. \n\n<b>Caution: </b>This is your \"password\" too. If you want to login on a other device you can use this token.</string>
+    <string name="welcome">Welcome</string>
+    <string name="ok">OK</string>
 </resources>

@@ -7,5 +7,7 @@
     <dimen name="small">8dp</dimen>
     <dimen name="tiny">4dp</dimen>
     <dimen name="normal">16dp</dimen>
+    <dimen name="big">32dp</dimen>
+    <dimen name="monster">48dp</dimen>
     <dimen name="tile_size">48dp</dimen>
 </resources>
