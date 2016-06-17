@@ -17,6 +17,7 @@ import java.util.Objects;
 import guru.stefma.restapi.ApiHelper;
 import guru.stefma.restapi.objects.Token;
 import guru.stefma.restapi.objects.user.CreateUser;
+import guru.stefma.restapi.objects.user.Settings;
 import guru.stefma.restapi.objects.user.UserResult;
 import guru.stefma.timetracking.R;
 import guru.stefma.timetracking.main.MainActivity;
@@ -109,6 +110,7 @@ public class CreateUserHandler {
                                             if (result.getResult().equals(UserResult.RESULT_OK)) {
                                                 SettingsManager.saveUserToken(context, result.getToken());
                                                 context.startActivity(MainActivity.newInstance(context));
+                                                getSettingsAndSafe(result.getToken(), context);
                                             } else {
                                                 Snackbar.make(view, context.getString(R.string.default_error),
                                                         Snackbar.LENGTH_LONG).show();
@@ -126,6 +128,24 @@ public class CreateUserHandler {
                     }
                 })
                 .create().show();
+    }
+
+    private void getSettingsAndSafe(String token, final Context context) {
+        final Context appContext = context.getApplicationContext();
+        new ApiHelper().getSettings(new Token(token), new Callback<Settings>() {
+            @Override
+            public void onResponse(Call<Settings> call, Response<Settings> response) {
+                if (response.isSuccessful()) {
+                    Settings settings = response.body();
+                    SettingsManager.saveDefaultWorkingHours(appContext, settings.getDefaultWorktime());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Settings> call, Throwable t) {
+
+            }
+        });
     }
 
 }
