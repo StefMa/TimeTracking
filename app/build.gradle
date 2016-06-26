@@ -1,4 +1,7 @@
 apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
+
+def crashlyticsEnabled = false
 
 android {
     compileSdkVersion 23
@@ -10,6 +13,8 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+
+        buildConfigField "boolean", "CRASHLYTICS_ENABLED", "$crashlyticsEnabled"
     }
     buildTypes {
         release {
@@ -23,13 +28,28 @@ android {
             if (useIncreasedMinSdk) {
                 minSdkVersion 21
             }
+
+            /**
+             * Crashlytics Beta Configuration
+             *
+             * More information at https://docs.fabric.io/android/beta/gradle.html
+             */
+            ext.enableCrashlytics = crashlyticsEnabled
+            ext.betaDistributionEmails = ""
+            ext.betaDistributionNotifications = true
+            ext.betaDistributionReleaseNotes = ""
         }
         prod {
+            ext.enableCrashlytics = crashlyticsEnabled
         }
     }
     dataBinding {
         enabled true
     }
+}
+
+repositories {
+    maven { url 'https://maven.fabric.io/public' }
 }
 
 dependencies {
@@ -43,6 +63,9 @@ dependencies {
     compile "com.android.support:support-annotations:$androidSupportVersion"
     compile "com.android.support:preference-v7:$androidSupportVersion"
     compile 'com.prolificinteractive:material-calendarview:1.2.0'
+    compile('com.crashlytics.sdk.android:crashlytics:2.5.7@aar') {
+        transitive = true;
+    }
 
     testCompile 'junit:junit:4.12'
 }
