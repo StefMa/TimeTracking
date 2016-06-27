@@ -17,7 +17,7 @@ You can also use the `setup.sh` script in the root path to make this happen.
 
 That's all. Now run the app and track your working time!
 
-### Crashlytics and Beta Distribution
+## Crashlytics and Beta Distribution
 To distribute the App for Beta-Testing we have implement [Crashlytics from Farbic](https://docs.fabric.io/android/fabric/overview.html).
 If you aren't similar with Crashlytics read [this](https://fabric.io/kits/android/crashlytics) first. It's a crash logging tool for many platforms. However. You don't need a Fabric Account to run this App.
 
